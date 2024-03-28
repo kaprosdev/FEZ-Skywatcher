@@ -1,0 +1,30 @@
+[gd_scene load_steps=4 format=3 uid="uid://dq5pqe2t36jib"]
+
+[ext_resource type="Material" uid="uid://dcu3t36lk6b6d" path="res://sky_background_mat.tres" id="1_um7fp"]
+[ext_resource type="Script" path="res://SkyPreview.gd" id="1_vqnwa"]
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_7xupy"]
+
+[node name="SkyPreview" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_vqnwa")
+
+[node name="Background" type="TextureRect" parent="."]
+material = ExtResource("1_um7fp")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("PlaceholderTexture2D_7xupy")
+
+[node name="TextureRect" type="TextureRect" parent="."]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
