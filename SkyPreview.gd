@@ -14,8 +14,8 @@ const PREVIEW_MOVE_SPEED = 1.0
 var level_size: Vector3 = Vector3(60, 54, 60)
 var camera_radius: float = 40.0
 
-@export_node_path("Camera3D") var layer_camera_path: NodePath
-@onready var layer_camera: Camera3D = get_node(layer_camera_path)
+@export_node_path("Camera3D") var sky_camera_path: NodePath
+@onready var sky_camera: Camera3D = get_node(sky_camera_path)
 @export_node_path("Node3D") var camera_center_path: NodePath
 @onready var camera_center: Node3D = get_node(camera_center_path)
 var rotating := false
@@ -43,7 +43,6 @@ var layer_meshes: Array[Node]:
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	resized.connect(_on_window_resized)
-	pass # Replace with function body.
 	
 func update_sky(new_sky: FezSky):
 	sky_bg_mat.set_shader_parameter("sky_texture", FezSky.active.get_texture(FezSky.active.background))
@@ -77,18 +76,16 @@ func _unhandled_input(event: InputEvent) -> void:
 			rotating = true
 			current_rotation -= 90
 		if rotating:
-			bglayers_root.top_level = true
 			var rotate_tween = create_tween()
 			rotate_tween.set_ease(Tween.EASE_OUT)
 			rotate_tween.set_trans(Tween.TRANS_QUART)
 			rotate_tween.tween_property(camera_center, "rotation_degrees:y", current_rotation, 0.5)
 			rotate_tween.tween_callback(func(): rotating = false)
-			rotate_tween.tween_callback(func(): bglayers_root.top_level = false)
 
 			
 func get_inv_view_matrix_right() -> Vector3:
-	var inverse = layer_camera.get_camera_transform().inverse().basis.x
-	return layer_camera.get_camera_transform().inverse().basis.x
+	var inverse = sky_camera.get_camera_transform().inverse().basis.x
+	return sky_camera.get_camera_transform().inverse().basis.x
 
 
 func humanize_time():
@@ -108,7 +105,7 @@ func _process(delta: float) -> void:
 		time_of_day -= 1.0
 	sky_bg_mat.set_shader_parameter("time_of_day", time_of_day)
 	
-	$numlabel.text = str(layer_camera.global_position)
+	$numlabel.text = str(sky_camera.global_position)
 	
 	if time_of_day > 1.0: $TimeDisplay.value = time_of_day - 1.0
 	else: $TimeDisplay.value = time_of_day
@@ -118,6 +115,8 @@ func _process(delta: float) -> void:
 		sinceReached += delta
 	else:
 		sinceReached = 0.0
+		
+	bglayers_root.global_position = camera_center.global_position
 	
 	if FezSky.active and FezSky.active.fog_colors != null:
 		var cloud_color = FezSky.active.get_cloud_color(time_of_day)
@@ -155,7 +154,7 @@ func _physics_process(delta: float) -> void:
 			var new_size = (size.x as float) / (pixels_per_trixel * 16.0)
 			size_tween.set_ease(Tween.EASE_OUT)
 			size_tween.set_trans(Tween.TRANS_QUART)
-			size_tween.tween_property(layer_camera, "size", new_size / 2, 0.25)
+			size_tween.tween_property(sky_camera, "size", new_size / 2, 0.25)
 			size_tween.tween_callback(func(): resizing = false)
 	
 	
@@ -168,14 +167,14 @@ func _physics_process(delta: float) -> void:
 	var viewScale: float = 1.0
 	var vector: Vector3 = camera_center.global_position
 	var num7: float = (vector - level_size / 2.0).dot(get_inv_view_matrix_right())
-	var num8: float = vector.y - level_size.y / 2.0 - layer_camera.v_offset
+	var num8: float = vector.y - level_size.y / 2.0 - sky_camera.v_offset
 	if FezSky.active.no_per_face_layer_x_offset:
 		sideOffset = num7
 	elif not rotating:
 		if sinceReached > 0.45:
 			sideOffset -= lastCamSide - num7
 		lastCamSide = num7
-	var camera_radius = layer_camera.size;
+	var camera_radius = sky_camera.size;
 	bglayers_root.scale = Vector3(1, 5, 1) * camera_radius * 2.0 / viewScale
 	bglayers_root.position = Vector3(0.0, 0.0, 0.0)
 	for skyLayerMesh in layer_meshes:

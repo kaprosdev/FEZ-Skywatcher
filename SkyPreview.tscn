@@ -35,9 +35,9 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_vqnwa")
-layer_camera_path = NodePath("3DWorldViewport/3DWorld/CameraCenter/Camera")
+sky_camera_path = NodePath("3DWorldViewport/3DWorld/CameraCenter/Camera")
 camera_center_path = NodePath("3DWorldViewport/3DWorld/CameraCenter")
-bg_layers_root_path = NodePath("3DWorldViewport/3DWorld/CameraCenter/Camera/BGLayers")
+bg_layers_root_path = NodePath("3DWorldViewport/3DWorld/BGLayers")
 sky_bg_mat = ExtResource("3_c556a")
 
 [node name="Preview" type="TextureRect" parent="."]
@@ -70,9 +70,6 @@ mesh = SubResource("BoxMesh_0m6f8")
 skeleton = NodePath("../../..")
 surface_material_override/0 = ExtResource("3_c556a")
 
-[node name="BGLayers" type="Node3D" parent="3DWorldViewport/3DWorld/CameraCenter/Camera"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -200, 0)
-
 [node name="Stars" type="Node3D" parent="3DWorldViewport/3DWorld/CameraCenter/Camera"]
 visible = false
 
@@ -92,6 +89,9 @@ mesh = SubResource("PlaneMesh_6vxbk")
 [node name="Stars_Left" type="MeshInstance3D" parent="3DWorldViewport/3DWorld/CameraCenter/Camera/Stars"]
 transform = Transform3D(-4.37114e-08, 1, -4.37114e-08, 0, -4.37114e-08, -1, -1, -4.37114e-08, 1.91069e-15, -0.499719, 0, 0)
 mesh = SubResource("PlaneMesh_6vxbk")
+
+[node name="BGLayers" type="Node3D" parent="3DWorldViewport/3DWorld"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -200, 0)
 
 [node name="DebugCamera" type="Camera3D" parent="3DWorldViewport"]
 transform = Transform3D(0.999586, -0.00135794, 0.0287508, 0, 0.998886, 0.0471788, -0.0287828, -0.0471592, 0.998473, 113.013, 151.541, 475.17)
