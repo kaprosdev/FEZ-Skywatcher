@@ -11,5 +11,3 @@ var texturematrix: Basis = Basis.IDENTITY
 func _process(delta: float) -> void:
 	if self.material_override != null:
 		self.material_override.set_shader_parameter("tex_matrix", texturematrix)
-		self.material_override.set_shader_parameter("opacity", 0.5)
-	pass
