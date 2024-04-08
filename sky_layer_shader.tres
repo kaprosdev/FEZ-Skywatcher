@@ -18,7 +18,8 @@ void vertex() {
 void fragment() {
 	vec2 uv = UV;
 	if(!vertical_tiling) {
-		uv.y = clamp(uv.y, 0.0, 0.9);
+		// for some reason setting the max to 1.0 results in cutoff
+		uv.y = clamp(uv.y, 0.0, 0.99999);
 	}
 
 	vec4 albedo_tex = texture(texture_albedo, uv);

@@ -20,6 +20,8 @@ var camera_radius: float = 40.0
 @onready var camera_center: Node3D = get_node(camera_center_path)
 var rotating := false
 var current_rotation := 0.0
+var resizing := false
+var pixels_per_trixel := 1.0
 
 var sideOffset: float = 0.0
 var lastCamSide: float = 0.0
@@ -58,6 +60,7 @@ func update_sky(new_sky: FezSky):
 		layer.texture = layer_tex
 		layer.albedo = Color.MAGENTA
 		layer.opacity = layer_definition.opacity
+		layer.vertical_tiling = FezSky.active.vertical_tiling
 		bglayers.push_back(layer)
 		bglayers_root.add_child(layer)
 	layers_loaded = true
@@ -134,6 +137,27 @@ func _physics_process(delta: float) -> void:
 			camera_center.position += camera_center.transform.basis.x * PREVIEW_MOVE_SPEED
 		if Input.is_action_pressed("preview_left"):
 			camera_center.position -= camera_center.transform.basis.x * PREVIEW_MOVE_SPEED
+	if not resizing:
+		if Input.is_action_just_pressed("camera_radius_80"):
+			resizing = true
+			pixels_per_trixel = 1.0
+		if Input.is_action_just_pressed("camera_radius_40"):
+			resizing = true
+			pixels_per_trixel = 2.0
+		if Input.is_action_just_pressed("camera_radius_20"):
+			resizing = true
+			pixels_per_trixel = 3.0
+		if Input.is_action_just_pressed("camera_radius_10"):
+			resizing = true
+			pixels_per_trixel = 4.0
+		if resizing:
+			var size_tween = get_tree().create_tween()
+			var new_size = (size.x as float) / (pixels_per_trixel * 16.0)
+			size_tween.set_ease(Tween.EASE_OUT)
+			size_tween.set_trans(Tween.TRANS_QUART)
+			size_tween.tween_property(layer_camera, "size", new_size / 2, 0.25)
+			size_tween.tween_callback(func(): resizing = false)
+	
 	
 	# pass
 	
@@ -151,6 +175,7 @@ func _physics_process(delta: float) -> void:
 		if sinceReached > 0.45:
 			sideOffset -= lastCamSide - num7
 		lastCamSide = num7
+	var camera_radius = layer_camera.size;
 	bglayers_root.scale = Vector3(1, 5, 1) * camera_radius * 2.0 / viewScale
 	bglayers_root.position = Vector3(0.0, 0.0, 0.0)
 	for skyLayerMesh in layer_meshes:
