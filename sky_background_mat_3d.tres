@@ -1,0 +1,10 @@
+[gd_resource type="ShaderMaterial" load_steps=3 format=3 uid="uid://cnskfst7nv7yw"]
+
+[ext_resource type="Shader" uid="uid://r2o87octshbi" path="res://sky_background_shader_3d.tres" id="1_onipj"]
+[ext_resource type="Texture2D" uid="uid://do0i6y8xp1sax" path="res://above/skyback.png" id="2_x81mk"]
+
+[resource]
+render_priority = 0
+shader = ExtResource("1_onipj")
+shader_parameter/time_of_day = 0.5
+shader_parameter/sky_texture = ExtResource("2_x81mk")

@@ -1,19 +1,25 @@
 extends Object
 class_name FezSky
+## Data representation of a FEZ sky asset.
+##
 
+static var active: FezSky
+
+## Internal lookup table of all textures associated with the sky.
 var _textures: Dictionary
 
+## The name of the sky. Textures for the sky must be located in an adjacent folder with the same name in all lowercase.
 var name: String
-var background: String
+var background: String ## Name of the background texture for the sky. Must be a name of a texture in the sky's adjacent folder.
 var wind_speed: float
 var density: float
 var fog_density: float
-var layers: Array[FezSkyLayer]
-var clouds: Array[String]
-var shadows: String
-var stars: String
+var layers: Array[FezSkyLayer] ## List of [FezSkyLayer]s to render with this sky.
+var clouds: Array[String] ## List of names of textures to use for clouds. Must be names of textures in the sky's adjacent folder.
+var shadows: String ## Name of the texture to use for shadows. Must be a name of a texture in the sky's adjacent folder.
+var stars: String ## Name of the texture to use for stars. Must be a name of a texture in the sky's adjacent folder.
 var cloud_tint: String
-var vertical_tiling: bool
+var vertical_tiling: bool ## If true, sky layers repeat at intervals up and down the skybox. Otherwise, there is only one set of sky layers centered on the origin.
 var horizontal_scrolling: bool
 var layer_base_height: float
 var interlayer_vertical_distance: float
@@ -27,7 +33,13 @@ var clouds_parallax: float
 var shadow_opacity: float
 var foliage_shadows: bool
 var no_per_face_layer_x_offset: bool
-var layer_base_x_offset: bool
+var layer_base_x_offset: float
+
+func get_texture(name: String):
+	return _textures[name.to_lower()]
+	
+func get_num6():
+	return
 
 static func load(path) -> FezSky:
 	var file = FileAccess.open(path, FileAccess.READ)
@@ -105,5 +117,6 @@ static func load(path) -> FezSky:
 	sky.no_per_face_layer_x_offset = skydata.get("NoPerFaceLayerXOffset", false)
 	sky.layer_base_x_offset = skydata.get("LayerBaseXOffset", 0)
 
+	active = sky
 	return sky
 

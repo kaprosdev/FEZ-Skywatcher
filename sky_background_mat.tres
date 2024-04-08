@@ -1,7 +1,0 @@
-[gd_resource type="ShaderMaterial" load_steps=2 format=3 uid="uid://dcu3t36lk6b6d"]
-
-[ext_resource type="Shader" uid="uid://c5ei85f2p8ak2" path="res://sky_background_shader.tres" id="1_4ht5y"]
-
-[resource]
-shader = ExtResource("1_4ht5y")
-shader_parameter/time_of_day = null

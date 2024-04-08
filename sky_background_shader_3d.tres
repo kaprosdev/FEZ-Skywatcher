@@ -1,0 +1,81 @@
+[gd_resource type="VisualShader" load_steps=7 format=3 uid="uid://r2o87octshbi"]
+
+[sub_resource type="VisualShaderNodeTexture2DParameter" id="VisualShaderNodeTexture2DParameter_y81jl"]
+parameter_name = "sky_texture"
+texture_type = 1
+texture_filter = 2
+texture_repeat = 1
+
+[sub_resource type="VisualShaderNodeTexture" id="VisualShaderNodeTexture_siu6g"]
+output_port_for_preview = 0
+source = 5
+
+[sub_resource type="VisualShaderNodeInput" id="VisualShaderNodeInput_8kw88"]
+input_name = "screen_uv"
+
+[sub_resource type="VisualShaderNodeFloatParameter" id="VisualShaderNodeFloatParameter_wkfin"]
+parameter_name = "time_of_day"
+hint = 1
+min = 0.5
+max = 1.5
+
+[sub_resource type="VisualShaderNodeVectorCompose" id="VisualShaderNodeVectorCompose_dbxv5"]
+op_type = 0
+
+[sub_resource type="VisualShaderNodeVectorDecompose" id="VisualShaderNodeVectorDecompose_38v2n"]
+default_input_values = [0, Vector2(0, 0)]
+op_type = 0
+
+[resource]
+code = "shader_type spatial;
+render_mode blend_mix, depth_draw_opaque, cull_back, diffuse_lambert, specular_schlick_ggx, unshaded;
+
+uniform float time_of_day : hint_range(0.5, 1.5);
+uniform sampler2D sky_texture : source_color, filter_linear, repeat_enable;
+
+
+
+void fragment() {
+// FloatParameter:5
+	float n_out5p0 = time_of_day;
+
+
+// Input:4
+	vec2 n_out4p0 = SCREEN_UV;
+
+
+// VectorDecompose:8
+	float n_out8p0 = n_out4p0.x;
+	float n_out8p1 = n_out4p0.y;
+
+
+// VectorCompose:6
+	vec2 n_out6p0 = vec2(n_out5p0, n_out8p1);
+
+
+	vec4 n_out3p0;
+// Texture2D:3
+	n_out3p0 = texture(sky_texture, n_out6p0);
+
+
+// Output:0
+	ALBEDO = vec3(n_out3p0.xyz);
+
+
+}
+"
+flags/unshaded = true
+nodes/fragment/0/position = Vector2(520, 140)
+nodes/fragment/2/node = SubResource("VisualShaderNodeTexture2DParameter_y81jl")
+nodes/fragment/2/position = Vector2(-40, 160)
+nodes/fragment/3/node = SubResource("VisualShaderNodeTexture_siu6g")
+nodes/fragment/3/position = Vector2(220, 180)
+nodes/fragment/4/node = SubResource("VisualShaderNodeInput_8kw88")
+nodes/fragment/4/position = Vector2(-300, 60)
+nodes/fragment/5/node = SubResource("VisualShaderNodeFloatParameter_wkfin")
+nodes/fragment/5/position = Vector2(40, -120)
+nodes/fragment/6/node = SubResource("VisualShaderNodeVectorCompose_dbxv5")
+nodes/fragment/6/position = Vector2(420, -20)
+nodes/fragment/8/node = SubResource("VisualShaderNodeVectorDecompose_38v2n")
+nodes/fragment/8/position = Vector2(260, 60)
+nodes/fragment/connections = PackedInt32Array(2, 0, 3, 2, 3, 0, 0, 0, 8, 1, 6, 1, 5, 0, 6, 0, 4, 0, 8, 0, 6, 0, 3, 0)

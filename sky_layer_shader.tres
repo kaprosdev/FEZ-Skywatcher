@@ -1,0 +1,33 @@
+[gd_resource type="Shader" format=3 uid="uid://d1mim68oopbdp"]
+
+[resource]
+code = "// NOTE: Shader automatically converted from Godot Engine 4.3.dev5's StandardMaterial3D.
+
+shader_type spatial;
+render_mode blend_mix, depth_draw_opaque, cull_back, diffuse_burley, specular_schlick_ggx, unshaded;
+
+uniform vec4 albedo : source_color;
+uniform sampler2D texture_albedo : source_color, filter_nearest;
+uniform float opacity = 1.0;
+
+uniform bool vertical_tiling = false;
+uniform mat3 tex_matrix = mat3(1.0);
+
+void vertex() {
+	UV = vec2(UV.x * tex_matrix[0][0] + UV.y * tex_matrix[0][1] + tex_matrix[0][2], UV.x * tex_matrix[1][0] + UV.y * tex_matrix[1][1] + tex_matrix[1][2]);
+}
+
+void fragment() {
+	vec2 uv = UV;
+	if(!vertical_tiling) {
+		uv.y = clamp(uv.y, 0.0, 0.9);
+	}
+
+	vec4 albedo_tex = texture(texture_albedo, uv);
+	ALBEDO = albedo.rgb * albedo_tex.rgb;
+
+	ALPHA *= albedo.a * albedo_tex.a * opacity;
+
+	DEPTH = 0.0;
+}
+"

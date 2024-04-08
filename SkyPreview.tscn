@@ -1,9 +1,28 @@
-[gd_scene load_steps=4 format=3 uid="uid://dq5pqe2t36jib"]
+[gd_scene load_steps=8 format=3 uid="uid://dq5pqe2t36jib"]
 
-[ext_resource type="Material" uid="uid://dcu3t36lk6b6d" path="res://sky_background_mat.tres" id="1_um7fp"]
 [ext_resource type="Script" path="res://SkyPreview.gd" id="1_vqnwa"]
+[ext_resource type="Material" uid="uid://cnskfst7nv7yw" path="res://sky_background_mat_3d.tres" id="3_c556a"]
 
-[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_7xupy"]
+[sub_resource type="ViewportTexture" id="ViewportTexture_mtqvh"]
+viewport_path = NodePath("3DWorldViewport")
+
+[sub_resource type="BoxMesh" id="BoxMesh_0m6f8"]
+flip_faces = true
+size = Vector3(360, 360, 360)
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_87qvt"]
+blend_mode = 1
+light_mode = 1
+
+[sub_resource type="Gradient" id="Gradient_efgap"]
+offsets = PackedFloat32Array(0.8, 0.8, 0.98, 1)
+colors = PackedColorArray(1, 1, 0.964706, 0, 1, 1, 0.964706, 1, 1, 1, 0.996078, 1, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_c0wwn"]
+gradient = SubResource("Gradient_efgap")
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(0.5, 0.01)
 
 [node name="SkyPreview" type="Control"]
 layout_mode = 3
@@ -13,18 +32,82 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_vqnwa")
+layer_camera_path = NodePath("3DWorldViewport/3DWorld/CameraCenter/Camera")
+camera_center_path = NodePath("3DWorldViewport/3DWorld/CameraCenter")
+bg_layers_root_path = NodePath("3DWorldViewport/3DWorld/CameraCenter/Camera/BGLayers")
+sky_bg_mat = ExtResource("3_c556a")
 
-[node name="Background" type="TextureRect" parent="."]
-material = ExtResource("1_um7fp")
+[node name="Preview" type="TextureRect" parent="."]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-texture = SubResource("PlaceholderTexture2D_7xupy")
+texture = SubResource("ViewportTexture_mtqvh")
+stretch_mode = 6
 
-[node name="TextureRect" type="TextureRect" parent="."]
+[node name="3DWorldViewport" type="SubViewport" parent="."]
+size = Vector2i(1200, 720)
+
+[node name="3DWorld" type="Node3D" parent="3DWorldViewport"]
+
+[node name="CameraCenter" type="Node3D" parent="3DWorldViewport/3DWorld"]
+
+[node name="Camera" type="Camera3D" parent="3DWorldViewport/3DWorld/CameraCenter"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 60)
+projection = 1
+fov = 1.0
+size = 40.0
+near = 0.25
+far = 500.0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="3DWorldViewport/3DWorld/CameraCenter/Camera"]
+transform = Transform3D(1, 0, 0, 0, -1, -1.50996e-07, 0, 1.50996e-07, -1, 0, 0, -60)
+mesh = SubResource("BoxMesh_0m6f8")
+skeleton = NodePath("../../..")
+surface_material_override/0 = ExtResource("3_c556a")
+
+[node name="BGLayers" type="Node3D" parent="3DWorldViewport/3DWorld/CameraCenter/Camera"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -200, -60)
+
+[node name="DebugCamera" type="Camera3D" parent="3DWorldViewport"]
+transform = Transform3D(0.999586, -0.00135794, 0.0287508, 0, 0.998886, 0.0471788, -0.0287828, -0.0471592, 0.998473, 113.013, 151.541, 475.17)
+
+[node name="TimeDisplay" type="TextureProgressBar" parent="."]
+auto_translate_mode = 1
+material = SubResource("CanvasItemMaterial_87qvt")
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -80.0
+offset_top = 16.0
+offset_right = -16.0
+offset_bottom = 80.0
+grow_horizontal = 0
+max_value = 1.0
+step = 0.001
+value = 0.65
+fill_mode = 4
+texture_progress = SubResource("GradientTexture2D_c0wwn")
+
+[node name="ClockTimeDisplay" type="Label" parent="TimeDisplay"]
+auto_translate_mode = 1
+layout_mode = 1
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_top = -11.5
+offset_bottom = 11.5
+grow_horizontal = 2
+grow_vertical = 2
+text = "10:00"
+horizontal_alignment = 1
+uppercase = true
+
+[node name="numlabel" type="Label" parent="."]
 layout_mode = 0
 offset_right = 40.0
-offset_bottom = 40.0
+offset_bottom = 23.0

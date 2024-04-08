@@ -1,27 +1,10 @@
-[gd_scene load_steps=8 format=3 uid="uid://bnwapgffcuwr4"]
+[gd_scene load_steps=4 format=3 uid="uid://bnwapgffcuwr4"]
 
 [ext_resource type="Script" path="res://main.gd" id="1_mow1k"]
 [ext_resource type="PackedScene" uid="uid://dq5pqe2t36jib" path="res://SkyPreview.tscn" id="3_221wx"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_exrvo"]
 bg_color = Color(0.156863, 0.156863, 0.156863, 0.501961)
-
-[sub_resource type="ViewportTexture" id="ViewportTexture_4dbgl"]
-viewport_path = NodePath("VBoxContainer/TabContainer/Sky Preview/Subviewport")
-
-[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_al5gw"]
-blend_mode = 1
-light_mode = 1
-
-[sub_resource type="Gradient" id="Gradient_6n7tl"]
-offsets = PackedFloat32Array(0.8, 0.8, 0.98, 1)
-colors = PackedColorArray(1, 1, 0.964706, 0, 1, 1, 0.964706, 1, 1, 1, 0.996078, 1, 1, 1, 1, 0)
-
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_sv34p"]
-gradient = SubResource("Gradient_6n7tl")
-fill = 1
-fill_from = Vector2(0.5, 0.5)
-fill_to = Vector2(0.5, 0.01)
 
 [node name="Main" type="Control"]
 layout_mode = 3
@@ -60,7 +43,6 @@ layout_mode = 2
 [node name="File" type="PopupMenu" parent="VBoxContainer/PanelContainer/MenuBar"]
 item_count = 1
 item_0/text = "Open Sky..."
-item_0/id = 0
 
 [node name="TabContainer" type="TabContainer" parent="VBoxContainer"]
 layout_mode = 2
@@ -80,47 +62,9 @@ size_flags_vertical = 3
 theme_override_constants/h_separation = 10
 theme_override_constants/v_separation = 10
 
-[node name="Sky Preview" type="TextureRect" parent="VBoxContainer/TabContainer"]
+[node name="Sky Preview" parent="VBoxContainer/TabContainer" instance=ExtResource("3_221wx")]
+unique_name_in_owner = true
 layout_mode = 2
-texture = SubResource("ViewportTexture_4dbgl")
-expand_mode = 2
-
-[node name="Subviewport" type="SubViewport" parent="VBoxContainer/TabContainer/Sky Preview"]
-size = Vector2i(1600, 900)
-
-[node name="SkyPreview" parent="VBoxContainer/TabContainer/Sky Preview/Subviewport" instance=ExtResource("3_221wx")]
-unique_name_in_owner = true
-
-[node name="TimeDisplay" type="TextureProgressBar" parent="VBoxContainer/TabContainer/Sky Preview"]
-unique_name_in_owner = true
-material = SubResource("CanvasItemMaterial_al5gw")
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 1.0
-anchor_right = 1.0
-offset_left = -72.0
-offset_top = 10.0
-offset_right = -10.0
-offset_bottom = 72.0
-max_value = 1.0
-step = 0.001
-value = 0.65
-fill_mode = 4
-texture_progress = SubResource("GradientTexture2D_sv34p")
-
-[node name="ClockTimeDisplay" type="Label" parent="VBoxContainer/TabContainer/Sky Preview/TimeDisplay"]
-layout_mode = 1
-anchors_preset = 14
-anchor_top = 0.5
-anchor_right = 1.0
-anchor_bottom = 0.5
-offset_top = -11.5
-offset_bottom = 11.5
-grow_horizontal = 2
-grow_vertical = 2
-text = "10:00"
-horizontal_alignment = 1
-uppercase = true
 
 [connection signal="file_selected" from="OpenFileDialog" to="." method="_on_open_file_dialog_file_selected"]
 [connection signal="id_pressed" from="VBoxContainer/PanelContainer/MenuBar/File" to="." method="_on_file_id_pressed"]
