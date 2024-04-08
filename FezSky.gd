@@ -8,6 +8,9 @@ static var active: FezSky
 ## Internal lookup table of all textures associated with the sky.
 var _textures: Dictionary
 
+var cloud_colors: Array[Color] = []
+var fog_colors: Array[Color] = []
+
 ## The name of the sky. Textures for the sky must be located in an adjacent folder with the same name in all lowercase.
 var name: String
 var background: String ## Name of the background texture for the sky. Must be a name of a texture in the sky's adjacent folder.
@@ -35,11 +38,26 @@ var foliage_shadows: bool
 var no_per_face_layer_x_offset: bool
 var layer_base_x_offset: float
 
-func get_texture(name: String):
+
+func get_texture(name: String) -> Texture2D:
 	return _textures[name.to_lower()]
-	
-func get_num6():
-	return
+
+func get_cloud_color(time: float) -> Color:
+	return get_timed_color(time, cloud_colors)
+
+func get_fog_color(time: float) -> Color:
+	return get_timed_color(time, fog_colors)
+
+func get_timed_color(time: float, color_arr: Array[Color]) -> Color:
+	time = fposmod(time, 1.0)
+	var coloridx_f: float = time * (color_arr.size() as float)
+	if coloridx_f == (color_arr.size() as float):
+		coloridx_f = 0.0
+	var color_1: Color = color_arr[max(floori(coloridx_f), 0)]
+	var color_2: Color = color_arr[min(ceili(coloridx_f), color_arr.size() - 1)]
+	var color_interp: float = coloridx_f - floorf(coloridx_f)
+	var the_color = color_1.lerp(color_2, color_interp)
+	return the_color
 
 static func load(path) -> FezSky:
 	var file = FileAccess.open(path, FileAccess.READ)
@@ -116,6 +134,26 @@ static func load(path) -> FezSky:
 	sky.foliage_shadows = skydata.get("FoliageShadows", false)
 	sky.no_per_face_layer_x_offset = skydata.get("NoPerFaceLayerXOffset", false)
 	sky.layer_base_x_offset = skydata.get("LayerBaseXOffset", 0)
+	
+	# initialize cloud colors (necessary for layer colors even if we don't have clouds)
+	if sky.cloud_tint != "":
+		var cloudtint_image = sky.get_texture(sky.cloud_tint).get_image()
+		var cloudtint_region = cloudtint_image.get_region(Rect2i(0, cloudtint_image.get_height() / 2, cloudtint_image.get_width(), 1))
+		var tintdata = cloudtint_region.get_data()
+		for i in range(0, tintdata.size(), 4):
+			var cloudcolor = Color(tintdata.decode_u8(i) / 255.0, tintdata.decode_u8(i+1) / 255.0, tintdata.decode_u8(i+2) / 255.0, tintdata.decode_u8(i+3) / 255.0)
+			sky.cloud_colors.push_back(cloudcolor)
+	else:
+		sky.cloud_colors.push_back(Color.WHITE)
+	
+	# initialize fog colors
+	var bgimage = sky.get_texture(sky.background).get_image()
+	var fogregion = bgimage.get_region(Rect2i(0, bgimage.get_height() / 2, bgimage.get_width(), 1))
+	var fogdata = fogregion.get_data()
+	for i in range(0, fogdata.size(), 4):
+		var fogcolor = Color(fogdata.decode_u8(i) / 255.0, fogdata.decode_u8(i+1) / 255.0, fogdata.decode_u8(i+2) / 255.0, fogdata.decode_u8(i+3) / 255.0)
+		sky.fog_colors.push_back(fogcolor)
+	
 
 	active = sky
 	return sky

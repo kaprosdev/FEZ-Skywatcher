@@ -1,4 +1,4 @@
-[gd_resource type="VisualShader" load_steps=7 format=3 uid="uid://r2o87octshbi"]
+[gd_resource type="VisualShader" load_steps=8 format=3 uid="uid://r2o87octshbi"]
 
 [sub_resource type="VisualShaderNodeTexture2DParameter" id="VisualShaderNodeTexture2DParameter_y81jl"]
 parameter_name = "sky_texture"
@@ -7,7 +7,6 @@ texture_filter = 2
 texture_repeat = 1
 
 [sub_resource type="VisualShaderNodeTexture" id="VisualShaderNodeTexture_siu6g"]
-output_port_for_preview = 0
 source = 5
 
 [sub_resource type="VisualShaderNodeInput" id="VisualShaderNodeInput_8kw88"]
@@ -25,6 +24,10 @@ op_type = 0
 [sub_resource type="VisualShaderNodeVectorDecompose" id="VisualShaderNodeVectorDecompose_38v2n"]
 default_input_values = [0, Vector2(0, 0)]
 op_type = 0
+
+[sub_resource type="VisualShaderNodeClamp" id="VisualShaderNodeClamp_m6q67"]
+output_port_for_preview = 0
+default_input_values = [0, 0.0, 1, 0.1, 2, 1.0]
 
 [resource]
 code = "shader_type spatial;
@@ -49,8 +52,14 @@ void fragment() {
 	float n_out8p1 = n_out4p0.y;
 
 
+// Clamp:9
+	float n_in9p1 = 0.10000;
+	float n_in9p2 = 1.00000;
+	float n_out9p0 = clamp(n_out8p1, n_in9p1, n_in9p2);
+
+
 // VectorCompose:6
-	vec2 n_out6p0 = vec2(n_out5p0, n_out8p1);
+	vec2 n_out6p0 = vec2(n_out5p0, n_out9p0);
 
 
 	vec4 n_out3p0;
@@ -64,6 +73,7 @@ void fragment() {
 
 }
 "
+graph_offset = Vector2(-367.442, -286.286)
 flags/unshaded = true
 nodes/fragment/0/position = Vector2(520, 140)
 nodes/fragment/2/node = SubResource("VisualShaderNodeTexture2DParameter_y81jl")
@@ -73,9 +83,11 @@ nodes/fragment/3/position = Vector2(220, 180)
 nodes/fragment/4/node = SubResource("VisualShaderNodeInput_8kw88")
 nodes/fragment/4/position = Vector2(-300, 60)
 nodes/fragment/5/node = SubResource("VisualShaderNodeFloatParameter_wkfin")
-nodes/fragment/5/position = Vector2(40, -120)
+nodes/fragment/5/position = Vector2(60, -160)
 nodes/fragment/6/node = SubResource("VisualShaderNodeVectorCompose_dbxv5")
 nodes/fragment/6/position = Vector2(420, -20)
 nodes/fragment/8/node = SubResource("VisualShaderNodeVectorDecompose_38v2n")
-nodes/fragment/8/position = Vector2(260, 60)
-nodes/fragment/connections = PackedInt32Array(2, 0, 3, 2, 3, 0, 0, 0, 8, 1, 6, 1, 5, 0, 6, 0, 4, 0, 8, 0, 6, 0, 3, 0)
+nodes/fragment/8/position = Vector2(-20, 40)
+nodes/fragment/9/node = SubResource("VisualShaderNodeClamp_m6q67")
+nodes/fragment/9/position = Vector2(180, 20)
+nodes/fragment/connections = PackedInt32Array(2, 0, 3, 2, 3, 0, 0, 0, 5, 0, 6, 0, 4, 0, 8, 0, 6, 0, 3, 0, 8, 1, 9, 0, 9, 0, 6, 1)

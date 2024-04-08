@@ -1,9 +1,7 @@
 [gd_resource type="Shader" format=3 uid="uid://d1mim68oopbdp"]
 
 [resource]
-code = "// NOTE: Shader automatically converted from Godot Engine 4.3.dev5's StandardMaterial3D.
-
-shader_type spatial;
+code = "shader_type spatial;
 render_mode blend_mix, depth_draw_opaque, cull_back, diffuse_burley, specular_schlick_ggx, unshaded;
 
 uniform vec4 albedo : source_color;

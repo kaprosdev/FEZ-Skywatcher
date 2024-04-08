@@ -56,11 +56,11 @@ func update_sky(new_sky: FezSky):
 		var layer_tex = FezSky.active.get_texture(layer_definition.name)
 		layer.index = i
 		layer.texture = layer_tex
-		layer.albedo = DEBUG_ALBEDOS_TEMP[i % DEBUG_ALBEDOS_TEMP.size()]
+		layer.albedo = Color.MAGENTA
+		layer.opacity = layer_definition.opacity
 		bglayers.push_back(layer)
 		bglayers_root.add_child(layer)
 	layers_loaded = true
-		
 
 func _on_window_resized() -> void:
 	$"3DWorldViewport".size = self.size
@@ -81,14 +81,6 @@ func _unhandled_input(event: InputEvent) -> void:
 			rotate_tween.tween_property(camera_center, "rotation_degrees:y", current_rotation, 0.5)
 			rotate_tween.tween_callback(func(): rotating = false)
 			rotate_tween.tween_callback(func(): bglayers_root.top_level = false)
-		
-func print_matrix(proj, matsize):
-	var tablestring = "[table=" + str(matsize) + "]"
-	for y in matsize:
-		for x in matsize:
-			tablestring += "[cell]" + str(proj[x][y]) + "[/cell]"
-	tablestring += "[/table]"
-	print_rich(tablestring)
 
 			
 func get_inv_view_matrix_right() -> Vector3:
@@ -123,6 +115,13 @@ func _process(delta: float) -> void:
 		sinceReached += delta
 	else:
 		sinceReached = 0.0
+	
+	if FezSky.active and FezSky.active.fog_colors != null:
+		var cloud_color = FezSky.active.get_cloud_color(time_of_day)
+		var fog_color = FezSky.active.get_fog_color(time_of_day)
+		for skyLayer in bglayers:
+			var layerColor := cloud_color.lerp(fog_color, FezSky.active.layers[skyLayer.index].fog_tint)
+			skyLayer.set_fog(layerColor)
 
 
 func _physics_process(delta: float) -> void:
