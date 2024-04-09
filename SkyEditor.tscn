@@ -1,0 +1,209 @@
+[gd_scene load_steps=8 format=3 uid="uid://v8kykgvjf7a7"]
+
+[ext_resource type="Script" path="res://SkyEditor.gd" id="1_er30l"]
+[ext_resource type="PackedScene" uid="uid://dq5pqe2t36jib" path="res://SkyPreview.tscn" id="1_jh2pw"]
+[ext_resource type="PackedScene" uid="uid://dhi8xqc5pu4uj" path="res://SkyEditorBoolSetting.tscn" id="3_p0act"]
+[ext_resource type="PackedScene" uid="uid://pjsk5llxms0j" path="res://SkyEditorFloatSetting.tscn" id="3_s05pv"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_k33ic"]
+bg_color = Color(0, 0, 0, 0.501961)
+
+[sub_resource type="FontVariation" id="FontVariation_4djvd"]
+variation_embolden = 0.5
+
+[sub_resource type="LabelSettings" id="LabelSettings_ik1ui"]
+font = SubResource("FontVariation_4djvd")
+
+[node name="SkyEditor" type="HBoxContainer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_er30l")
+
+[node name="Sky Preview" parent="." instance=ExtResource("1_jh2pw")]
+unique_name_in_owner = true
+auto_translate_mode = 1
+layout_mode = 2
+
+[node name="CollapserButton" type="Button" parent="."]
+layout_mode = 2
+focus_mode = 0
+theme_override_font_sizes/font_size = 10
+text = "▶"
+
+[node name="SettingsContainer" type="PanelContainer" parent="."]
+layout_mode = 2
+
+[node name="ScrollContainer" type="ScrollContainer" parent="SettingsContainer"]
+layout_mode = 2
+horizontal_scroll_mode = 0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="SettingsContainer/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="PanelContainer4" type="PanelContainer" parent="SettingsContainer/ScrollContainer/VBoxContainer"]
+auto_translate_mode = 1
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_k33ic")
+
+[node name="MarginContainer" type="MarginContainer" parent="SettingsContainer/ScrollContainer/VBoxContainer/PanelContainer4"]
+auto_translate_mode = 1
+layout_mode = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="Label" type="Label" parent="SettingsContainer/ScrollContainer/VBoxContainer/PanelContainer4/MarginContainer"]
+auto_translate_mode = 1
+layout_mode = 2
+text = "Clouds"
+label_settings = SubResource("LabelSettings_ik1ui")
+
+[node name="FloatSetting10" parent="SettingsContainer/ScrollContainer/VBoxContainer" instance=ExtResource("3_s05pv")]
+layout_mode = 2
+setting_name = "density"
+
+[node name="FloatSetting11" parent="SettingsContainer/ScrollContainer/VBoxContainer" instance=ExtResource("3_s05pv")]
+layout_mode = 2
+setting_name = "clouds_parallax"
+
+[node name="PanelContainer2" type="PanelContainer" parent="SettingsContainer/ScrollContainer/VBoxContainer"]
+auto_translate_mode = 1
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_k33ic")
+
+[node name="MarginContainer" type="MarginContainer" parent="SettingsContainer/ScrollContainer/VBoxContainer/PanelContainer2"]
+auto_translate_mode = 1
+layout_mode = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="Label" type="Label" parent="SettingsContainer/ScrollContainer/VBoxContainer/PanelContainer2/MarginContainer"]
+auto_translate_mode = 1
+layout_mode = 2
+text = "Wind"
+label_settings = SubResource("LabelSettings_ik1ui")
+
+[node name="FloatSetting7" parent="SettingsContainer/ScrollContainer/VBoxContainer" instance=ExtResource("3_s05pv")]
+layout_mode = 2
+setting_name = "wind_speed"
+
+[node name="FloatSetting8" parent="SettingsContainer/ScrollContainer/VBoxContainer" instance=ExtResource("3_s05pv")]
+layout_mode = 2
+setting_name = "wind_parallax"
+
+[node name="FloatSetting9" parent="SettingsContainer/ScrollContainer/VBoxContainer" instance=ExtResource("3_s05pv")]
+layout_mode = 2
+setting_name = "wind_distance"
+
+[node name="PanelContainer" type="PanelContainer" parent="SettingsContainer/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_k33ic")
+
+[node name="MarginContainer" type="MarginContainer" parent="SettingsContainer/ScrollContainer/VBoxContainer/PanelContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="Label" type="Label" parent="SettingsContainer/ScrollContainer/VBoxContainer/PanelContainer/MarginContainer"]
+layout_mode = 2
+text = "Parallax"
+label_settings = SubResource("LabelSettings_ik1ui")
+
+[node name="BoolSetting" parent="SettingsContainer/ScrollContainer/VBoxContainer" instance=ExtResource("3_p0act")]
+layout_mode = 2
+tooltip_text = "Whether sky layers should tile vertically, or stretch at the top and bottom. Also shifts vertical parallax by 0.5 units downwards if not enabled."
+setting_name = "vertical_tiling"
+
+[node name="BoolSetting3" parent="SettingsContainer/ScrollContainer/VBoxContainer" instance=ExtResource("3_p0act")]
+layout_mode = 2
+setting_name = "horizontal_scrolling"
+
+[node name="FloatSetting" parent="SettingsContainer/ScrollContainer/VBoxContainer" instance=ExtResource("3_s05pv")]
+layout_mode = 2
+setting_name = "layer_base_height"
+
+[node name="FloatSetting2" parent="SettingsContainer/ScrollContainer/VBoxContainer" instance=ExtResource("3_s05pv")]
+layout_mode = 2
+setting_name = "interlayer_vertical_distance"
+
+[node name="FloatSetting3" parent="SettingsContainer/ScrollContainer/VBoxContainer" instance=ExtResource("3_s05pv")]
+layout_mode = 2
+setting_name = "interlayer_horizontal_distance"
+
+[node name="FloatSetting4" parent="SettingsContainer/ScrollContainer/VBoxContainer" instance=ExtResource("3_s05pv")]
+layout_mode = 2
+setting_name = "horizontal_distance"
+
+[node name="FloatSetting5" parent="SettingsContainer/ScrollContainer/VBoxContainer" instance=ExtResource("3_s05pv")]
+layout_mode = 2
+setting_name = "vertical_distance"
+
+[node name="FloatSetting6" parent="SettingsContainer/ScrollContainer/VBoxContainer" instance=ExtResource("3_s05pv")]
+layout_mode = 2
+setting_name = "layer_base_spacing"
+
+[node name="PanelContainer5" type="PanelContainer" parent="SettingsContainer/ScrollContainer/VBoxContainer"]
+auto_translate_mode = 1
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_k33ic")
+
+[node name="MarginContainer" type="MarginContainer" parent="SettingsContainer/ScrollContainer/VBoxContainer/PanelContainer5"]
+auto_translate_mode = 1
+layout_mode = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="Label" type="Label" parent="SettingsContainer/ScrollContainer/VBoxContainer/PanelContainer5/MarginContainer"]
+auto_translate_mode = 1
+layout_mode = 2
+text = "Shadows"
+label_settings = SubResource("LabelSettings_ik1ui")
+
+[node name="FloatSetting13" parent="SettingsContainer/ScrollContainer/VBoxContainer" instance=ExtResource("3_s05pv")]
+layout_mode = 2
+setting_name = "shadow_opacity"
+
+[node name="BoolSetting4" parent="SettingsContainer/ScrollContainer/VBoxContainer" instance=ExtResource("3_p0act")]
+layout_mode = 2
+setting_name = "foliage_shadows"
+
+[node name="PanelContainer3" type="PanelContainer" parent="SettingsContainer/ScrollContainer/VBoxContainer"]
+auto_translate_mode = 1
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_k33ic")
+
+[node name="MarginContainer" type="MarginContainer" parent="SettingsContainer/ScrollContainer/VBoxContainer/PanelContainer3"]
+auto_translate_mode = 1
+layout_mode = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="Label" type="Label" parent="SettingsContainer/ScrollContainer/VBoxContainer/PanelContainer3/MarginContainer"]
+auto_translate_mode = 1
+layout_mode = 2
+text = "NoPerFaceLayerXOffset"
+label_settings = SubResource("LabelSettings_ik1ui")
+
+[node name="BoolSetting2" parent="SettingsContainer/ScrollContainer/VBoxContainer" instance=ExtResource("3_p0act")]
+layout_mode = 2
+tooltip_text = "NoPerFaceLayerXOffset"
+setting_name = "no_per_face_layer_x_offset"
+
+[node name="FloatSetting12" parent="SettingsContainer/ScrollContainer/VBoxContainer" instance=ExtResource("3_s05pv")]
+layout_mode = 2
+setting_name = "layer_base_x_offset"
+
+[connection signal="pressed" from="CollapserButton" to="." method="_on_collapser_button_pressed"]

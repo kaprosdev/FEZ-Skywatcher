@@ -21,14 +21,13 @@ func _on_file_id_pressed(id: int) -> void:
 
 
 func _on_open_file_dialog_file_selected(path: String) -> void:
-	sky = FezSky.load(path)
-	var texturechildren = %TextureDisplay.get_children()
-	for child in texturechildren:
-		child.queue_free()
-	for texturename in sky._textures:
-		var texture_preview = preview_prefab.instantiate()
-		texture_preview.load_texture(texturename, sky._textures[texturename])
-		%TextureDisplay.add_child(texture_preview)
-	
-	%"Sky Preview".update_sky(sky)
+	FezSky.load(path)
+	#var texturechildren = %TextureDisplay.get_children()
+	#for child in texturechildren:
+		#child.queue_free()
+	#for texturename in sky._textures:
+		#var texture_preview = preview_prefab.instantiate()
+		#texture_preview.load_texture(texturename, FezSky.get_texture(texturename))
+		#%TextureDisplay.add_child(texture_preview)
+		
 	print("Finished loading")

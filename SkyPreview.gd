@@ -43,23 +43,23 @@ var layer_meshes: Array[Node]:
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	resized.connect(_on_window_resized)
+	FezSky.new_sky_loaded.connect(update_sky)
 	
-func update_sky(new_sky: FezSky):
-	sky_bg_mat.set_shader_parameter("sky_texture", FezSky.active.get_texture(FezSky.active.background))
+func update_sky():
+	sky_bg_mat.set_shader_parameter("sky_texture", FezSky.get_texture(FezSky.background))
 	if bglayers.size() > 0:
 		layers_loaded = false
 		for layer in bglayers:
 			layer.queue_free()
 	bglayers = []
-	for i in FezSky.active.layers.size():
-		var layer_definition = FezSky.active.layers[i]
+	for i in FezSky.layers.size():
+		var layer_definition = FezSky.layers[i]
 		var layer = BG_Layer_Prefab.instantiate()
-		var layer_tex = FezSky.active.get_texture(layer_definition.name)
+		var layer_tex = FezSky.get_texture(layer_definition.name)
 		layer.index = i
 		layer.texture = layer_tex
 		layer.albedo = Color.MAGENTA
 		layer.opacity = layer_definition.opacity
-		layer.vertical_tiling = FezSky.active.vertical_tiling
 		bglayers.push_back(layer)
 		bglayers_root.add_child(layer)
 	layers_loaded = true
@@ -118,11 +118,11 @@ func _process(delta: float) -> void:
 		
 	bglayers_root.global_position = camera_center.global_position
 	
-	if FezSky.active and FezSky.active.fog_colors != null:
-		var cloud_color = FezSky.active.get_cloud_color(time_of_day)
-		var fog_color = FezSky.active.get_fog_color(time_of_day)
+	if FezSky.sky_loaded and FezSky.fog_colors != null:
+		var cloud_color = FezSky.get_cloud_color(time_of_day)
+		var fog_color = FezSky.get_fog_color(time_of_day)
 		for skyLayer in bglayers:
-			var layerColor := cloud_color.lerp(fog_color, FezSky.active.layers[skyLayer.index].fog_tint)
+			var layerColor = cloud_color.lerp(fog_color, FezSky.layers[skyLayer.index].fog_tint)
 			skyLayer.set_fog(layerColor)
 
 
@@ -161,14 +161,14 @@ func _physics_process(delta: float) -> void:
 	# pass
 	
 	# ResizeLayers()
-	if FezSky.active == null or bglayers.size() == 0:
+	if FezSky.sky_loaded == null or bglayers.size() == 0:
 		return
 	# var viewScale: float = self.size.x / 1280.0
 	var viewScale: float = 1.0
 	var vector: Vector3 = camera_center.global_position
 	var num7: float = (vector - level_size / 2.0).dot(get_inv_view_matrix_right())
 	var num8: float = vector.y - level_size.y / 2.0 - sky_camera.v_offset
-	if FezSky.active.no_per_face_layer_x_offset:
+	if FezSky.no_per_face_layer_x_offset:
 		sideOffset = num7
 	elif not rotating:
 		if sinceReached > 0.45:
@@ -186,13 +186,13 @@ func _physics_process(delta: float) -> void:
 		var vector2: Vector2 = Vector2(sideOffset / (float(skyLayerMesh.texture.get_width()) / 16.0), num8 / (float(skyLayerMesh.texture.get_height()) / 16.0))
 		
 		var vector3: Vector2
-		var part1 = (0.0 if FezSky.active.no_per_face_layer_x_offset else (float(skyLayerMesh.side) / 4.0))
-		var part2 = (vector2.x * FezSky.active.horizontal_distance)
-		var part3 = (vector2.x * (FezSky.active.interlayer_horizontal_distance * num10))
-		var part4 = (-skyLayerMesh.wind_offset * FezSky.active.wind_distance)
-		var part5 = (-skyLayerMesh.wind_offset * (FezSky.active.wind_parallax * num10))
-		vector3.x = part1 + FezSky.active.layer_base_x_offset + part2 + part3 + part4 + part5
-		if not FezSky.active.vertical_tiling: num10 -= 0.5
-		vector3.y = FezSky.active.layer_base_height + (num10 * FezSky.active.layer_base_spacing) + (-(vector2.y) * FezSky.active.vertical_distance) + (-num10 * (FezSky.active.interlayer_vertical_distance * vector2.y))
+		var part1 = (0.0 if FezSky.no_per_face_layer_x_offset else (float(skyLayerMesh.side) / 4.0))
+		var part2 = (vector2.x * FezSky.horizontal_distance)
+		var part3 = (vector2.x * (FezSky.interlayer_horizontal_distance * num10))
+		var part4 = (-skyLayerMesh.wind_offset * FezSky.wind_distance)
+		var part5 = (-skyLayerMesh.wind_offset * (FezSky.wind_parallax * num10))
+		vector3.x = part1 + FezSky.layer_base_x_offset + part2 + part3 + part4 + part5
+		if not FezSky.vertical_tiling: num10 -= 0.5
+		vector3.y = FezSky.layer_base_height + (num10 * FezSky.layer_base_spacing) + (-(vector2.y) * FezSky.vertical_distance) + (-num10 * (FezSky.interlayer_vertical_distance * vector2.y))
 		skyLayerMesh.texturematrix = Basis(Vector3(-num12, 0.0, -vector3.x + num12 / 2.0), Vector3(0.0, num13, vector3.y - num13 / 2.0), Vector3(0.0, 0.0, 1.0))
 		

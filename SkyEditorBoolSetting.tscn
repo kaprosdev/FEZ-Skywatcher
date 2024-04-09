@@ -1,0 +1,30 @@
+[gd_scene load_steps=2 format=3 uid="uid://dhi8xqc5pu4uj"]
+
+[ext_resource type="Script" path="res://sky_editor_bool_setting.gd" id="1_14s0o"]
+
+[node name="BoolSetting" type="MarginContainer"]
+auto_translate_mode = 1
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 2
+theme_override_constants/margin_right = 2
+theme_override_constants/margin_bottom = 2
+script = ExtResource("1_14s0o")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+auto_translate_mode = 1
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="SettingLabel" type="Label" parent="HBoxContainer"]
+unique_name_in_owner = true
+auto_translate_mode = 1
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Setting Name"
+
+[node name="SettingValue" type="CheckButton" parent="HBoxContainer"]
+unique_name_in_owner = true
+auto_translate_mode = 1
+layout_mode = 2
+
+[connection signal="toggled" from="HBoxContainer/SettingValue" to="." method="_on_setting_value_changed"]
