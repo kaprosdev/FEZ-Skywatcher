@@ -1,7 +1,8 @@
-[gd_scene load_steps=8 format=3 uid="uid://v8kykgvjf7a7"]
+[gd_scene load_steps=9 format=3 uid="uid://v8kykgvjf7a7"]
 
 [ext_resource type="Script" path="res://SkyEditor.gd" id="1_er30l"]
 [ext_resource type="PackedScene" uid="uid://dq5pqe2t36jib" path="res://SkyPreview.tscn" id="1_jh2pw"]
+[ext_resource type="PackedScene" uid="uid://84dm6eq60ka2" path="res://SkyEditorTextureSetting.tscn" id="3_72m24"]
 [ext_resource type="PackedScene" uid="uid://dhi8xqc5pu4uj" path="res://SkyEditorBoolSetting.tscn" id="3_p0act"]
 [ext_resource type="PackedScene" uid="uid://pjsk5llxms0j" path="res://SkyEditorFloatSetting.tscn" id="3_s05pv"]
 
@@ -43,6 +44,10 @@ horizontal_scroll_mode = 0
 [node name="VBoxContainer" type="VBoxContainer" parent="SettingsContainer/ScrollContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
+
+[node name="TextureSetting" parent="SettingsContainer/ScrollContainer/VBoxContainer" instance=ExtResource("3_72m24")]
+layout_mode = 2
+setting_name = "background"
 
 [node name="PanelContainer4" type="PanelContainer" parent="SettingsContainer/ScrollContainer/VBoxContainer"]
 auto_translate_mode = 1
