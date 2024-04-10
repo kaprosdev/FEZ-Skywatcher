@@ -18,6 +18,9 @@ func select_texture(index: int = 0) -> void:
 	texture_selected.emit(%ItemList.get_item_text(%ItemList.get_selected_items()[0]))
 	self.queue_free()
 
+func clear_texture() -> void:
+	texture_selected.emit("")
+	self.queue_free()
 
 func _on_close_requested() -> void:
 	self.queue_free()

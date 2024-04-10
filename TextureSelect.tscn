@@ -41,6 +41,14 @@ fixed_icon_size = Vector2i(100, 100)
 layout_mode = 2
 alignment = 2
 
+[node name="ClearTexButton" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+text = "Clear Texture"
+
+[node name="Spacer" type="Control" parent="MarginContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
 [node name="CancelButton" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 text = "Cancel"
@@ -51,5 +59,6 @@ text = "Select"
 
 [connection signal="close_requested" from="." to="." method="_on_close_requested"]
 [connection signal="item_activated" from="MarginContainer/VBoxContainer/ItemList" to="." method="select_texture"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/HBoxContainer/ClearTexButton" to="." method="clear_texture"]
 [connection signal="pressed" from="MarginContainer/VBoxContainer/HBoxContainer/CancelButton" to="." method="_on_close_requested"]
 [connection signal="pressed" from="MarginContainer/VBoxContainer/HBoxContainer/SelectButton" to="." method="select_texture"]

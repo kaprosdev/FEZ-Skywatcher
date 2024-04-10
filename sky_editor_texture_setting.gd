@@ -13,14 +13,17 @@ func _ready() -> void:
 		FezSky.new_sky_loaded.connect(update_setting_value)
 
 func update_setting_value():
-	%SettingButton.text = FezSky.get(setting_name)
-	%SettingButton.icon = FezSky.get_texture(FezSky.get(setting_name))
+	var texname = FezSky.get(setting_name)
+	if texname != "":
+		%SettingButton.text = texname
+		%SettingButton.icon = FezSky.get_texture(texname)
+	else:
+		%SettingButton.text = "None"
+		%SettingButton.icon = null
 	
 func _on_setting_value_changed(value: String) -> void:
 	FezSky.set(setting_name, value.get_basename())
 	update_setting_value()
-	
-
 
 func _on_setting_button_pressed() -> void:
 	var selector = TEX_SELECT.instantiate()

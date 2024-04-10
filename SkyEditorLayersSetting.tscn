@@ -1,0 +1,15 @@
+[gd_scene load_steps=2 format=3 uid="uid://ctflfj6mconmy"]
+
+[ext_resource type="Script" path="res://sky_editor_layers_setting.gd" id="1_hms4x"]
+
+[node name="LayersSetting" type="ScrollContainer"]
+auto_translate_mode = 1
+size_flags_vertical = 3
+horizontal_scroll_mode = 0
+script = ExtResource("1_hms4x")
+MAX_HEIGHT = 300
+
+[node name="LayersStack" type="VBoxContainer" parent="."]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3

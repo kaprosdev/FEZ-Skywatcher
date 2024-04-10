@@ -1,10 +1,11 @@
-[gd_scene load_steps=9 format=3 uid="uid://v8kykgvjf7a7"]
+[gd_scene load_steps=11 format=3 uid="uid://v8kykgvjf7a7"]
 
 [ext_resource type="Script" path="res://SkyEditor.gd" id="1_er30l"]
 [ext_resource type="PackedScene" uid="uid://dq5pqe2t36jib" path="res://SkyPreview.tscn" id="1_jh2pw"]
 [ext_resource type="PackedScene" uid="uid://84dm6eq60ka2" path="res://SkyEditorTextureSetting.tscn" id="3_72m24"]
 [ext_resource type="PackedScene" uid="uid://dhi8xqc5pu4uj" path="res://SkyEditorBoolSetting.tscn" id="3_p0act"]
 [ext_resource type="PackedScene" uid="uid://pjsk5llxms0j" path="res://SkyEditorFloatSetting.tscn" id="3_s05pv"]
+[ext_resource type="PackedScene" uid="uid://ctflfj6mconmy" path="res://SkyEditorLayersSetting.tscn" id="4_18wve"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_k33ic"]
 bg_color = Color(0, 0, 0, 0.501961)
@@ -14,6 +15,9 @@ variation_embolden = 0.5
 
 [sub_resource type="LabelSettings" id="LabelSettings_ik1ui"]
 font = SubResource("FontVariation_4djvd")
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_mfasv"]
+blend_mode = 3
 
 [node name="SkyEditor" type="HBoxContainer"]
 anchors_preset = 15
@@ -45,16 +49,12 @@ horizontal_scroll_mode = 0
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="TextureSetting" parent="SettingsContainer/ScrollContainer/VBoxContainer" instance=ExtResource("3_72m24")]
-layout_mode = 2
-setting_name = "background"
-
-[node name="PanelContainer4" type="PanelContainer" parent="SettingsContainer/ScrollContainer/VBoxContainer"]
+[node name="BackgroundHeader" type="PanelContainer" parent="SettingsContainer/ScrollContainer/VBoxContainer"]
 auto_translate_mode = 1
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_k33ic")
 
-[node name="MarginContainer" type="MarginContainer" parent="SettingsContainer/ScrollContainer/VBoxContainer/PanelContainer4"]
+[node name="MarginContainer" type="MarginContainer" parent="SettingsContainer/ScrollContainer/VBoxContainer/BackgroundHeader"]
 auto_translate_mode = 1
 layout_mode = 2
 theme_override_constants/margin_left = 5
@@ -62,26 +62,79 @@ theme_override_constants/margin_top = 5
 theme_override_constants/margin_right = 5
 theme_override_constants/margin_bottom = 5
 
-[node name="Label" type="Label" parent="SettingsContainer/ScrollContainer/VBoxContainer/PanelContainer4/MarginContainer"]
+[node name="Label" type="Label" parent="SettingsContainer/ScrollContainer/VBoxContainer/BackgroundHeader/MarginContainer"]
+auto_translate_mode = 1
+layout_mode = 2
+text = "General"
+label_settings = SubResource("LabelSettings_ik1ui")
+
+[node name="BackgroundTexture" parent="SettingsContainer/ScrollContainer/VBoxContainer" instance=ExtResource("3_72m24")]
+layout_mode = 2
+setting_name = "background"
+
+[node name="StarsTexture" parent="SettingsContainer/ScrollContainer/VBoxContainer" instance=ExtResource("3_72m24")]
+layout_mode = 2
+setting_name = "stars"
+
+[node name="CloudTintTexture" parent="SettingsContainer/ScrollContainer/VBoxContainer" instance=ExtResource("3_72m24")]
+layout_mode = 2
+setting_name = "cloud_tint"
+
+[node name="LayersHeading" type="PanelContainer" parent="SettingsContainer/ScrollContainer/VBoxContainer"]
+auto_translate_mode = 1
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_k33ic")
+
+[node name="MarginContainer" type="MarginContainer" parent="SettingsContainer/ScrollContainer/VBoxContainer/LayersHeading"]
+auto_translate_mode = 1
+layout_mode = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="Label" type="Label" parent="SettingsContainer/ScrollContainer/VBoxContainer/LayersHeading/MarginContainer"]
+auto_translate_mode = 1
+layout_mode = 2
+text = "Layers"
+label_settings = SubResource("LabelSettings_ik1ui")
+
+[node name="LayersSetting" parent="SettingsContainer/ScrollContainer/VBoxContainer" instance=ExtResource("4_18wve")]
+layout_mode = 2
+
+[node name="CloudsHeader" type="PanelContainer" parent="SettingsContainer/ScrollContainer/VBoxContainer"]
+auto_translate_mode = 1
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_k33ic")
+
+[node name="MarginContainer" type="MarginContainer" parent="SettingsContainer/ScrollContainer/VBoxContainer/CloudsHeader"]
+auto_translate_mode = 1
+layout_mode = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="Label" type="Label" parent="SettingsContainer/ScrollContainer/VBoxContainer/CloudsHeader/MarginContainer"]
 auto_translate_mode = 1
 layout_mode = 2
 text = "Clouds"
 label_settings = SubResource("LabelSettings_ik1ui")
 
-[node name="FloatSetting10" parent="SettingsContainer/ScrollContainer/VBoxContainer" instance=ExtResource("3_s05pv")]
+[node name="DensityFloat" parent="SettingsContainer/ScrollContainer/VBoxContainer" instance=ExtResource("3_s05pv")]
 layout_mode = 2
 setting_name = "density"
 
-[node name="FloatSetting11" parent="SettingsContainer/ScrollContainer/VBoxContainer" instance=ExtResource("3_s05pv")]
+[node name="CloudsParallaxFloat" parent="SettingsContainer/ScrollContainer/VBoxContainer" instance=ExtResource("3_s05pv")]
 layout_mode = 2
 setting_name = "clouds_parallax"
 
-[node name="PanelContainer2" type="PanelContainer" parent="SettingsContainer/ScrollContainer/VBoxContainer"]
+[node name="WindHeader" type="PanelContainer" parent="SettingsContainer/ScrollContainer/VBoxContainer"]
 auto_translate_mode = 1
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_k33ic")
 
-[node name="MarginContainer" type="MarginContainer" parent="SettingsContainer/ScrollContainer/VBoxContainer/PanelContainer2"]
+[node name="MarginContainer" type="MarginContainer" parent="SettingsContainer/ScrollContainer/VBoxContainer/WindHeader"]
 auto_translate_mode = 1
 layout_mode = 2
 theme_override_constants/margin_left = 5
@@ -89,79 +142,79 @@ theme_override_constants/margin_top = 5
 theme_override_constants/margin_right = 5
 theme_override_constants/margin_bottom = 5
 
-[node name="Label" type="Label" parent="SettingsContainer/ScrollContainer/VBoxContainer/PanelContainer2/MarginContainer"]
+[node name="Label" type="Label" parent="SettingsContainer/ScrollContainer/VBoxContainer/WindHeader/MarginContainer"]
 auto_translate_mode = 1
 layout_mode = 2
 text = "Wind"
 label_settings = SubResource("LabelSettings_ik1ui")
 
-[node name="FloatSetting7" parent="SettingsContainer/ScrollContainer/VBoxContainer" instance=ExtResource("3_s05pv")]
+[node name="WindSpeedFloat" parent="SettingsContainer/ScrollContainer/VBoxContainer" instance=ExtResource("3_s05pv")]
 layout_mode = 2
 setting_name = "wind_speed"
 
-[node name="FloatSetting8" parent="SettingsContainer/ScrollContainer/VBoxContainer" instance=ExtResource("3_s05pv")]
+[node name="WindParallaxFloat" parent="SettingsContainer/ScrollContainer/VBoxContainer" instance=ExtResource("3_s05pv")]
 layout_mode = 2
 setting_name = "wind_parallax"
 
-[node name="FloatSetting9" parent="SettingsContainer/ScrollContainer/VBoxContainer" instance=ExtResource("3_s05pv")]
+[node name="WindDistanceFloat" parent="SettingsContainer/ScrollContainer/VBoxContainer" instance=ExtResource("3_s05pv")]
 layout_mode = 2
 setting_name = "wind_distance"
 
-[node name="PanelContainer" type="PanelContainer" parent="SettingsContainer/ScrollContainer/VBoxContainer"]
+[node name="ParallaxHeader" type="PanelContainer" parent="SettingsContainer/ScrollContainer/VBoxContainer"]
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_k33ic")
 
-[node name="MarginContainer" type="MarginContainer" parent="SettingsContainer/ScrollContainer/VBoxContainer/PanelContainer"]
+[node name="MarginContainer" type="MarginContainer" parent="SettingsContainer/ScrollContainer/VBoxContainer/ParallaxHeader"]
 layout_mode = 2
 theme_override_constants/margin_left = 5
 theme_override_constants/margin_top = 5
 theme_override_constants/margin_right = 5
 theme_override_constants/margin_bottom = 5
 
-[node name="Label" type="Label" parent="SettingsContainer/ScrollContainer/VBoxContainer/PanelContainer/MarginContainer"]
+[node name="Label" type="Label" parent="SettingsContainer/ScrollContainer/VBoxContainer/ParallaxHeader/MarginContainer"]
 layout_mode = 2
 text = "Parallax"
 label_settings = SubResource("LabelSettings_ik1ui")
 
-[node name="BoolSetting" parent="SettingsContainer/ScrollContainer/VBoxContainer" instance=ExtResource("3_p0act")]
+[node name="VertTilingBool" parent="SettingsContainer/ScrollContainer/VBoxContainer" instance=ExtResource("3_p0act")]
 layout_mode = 2
 tooltip_text = "Whether sky layers should tile vertically, or stretch at the top and bottom. Also shifts vertical parallax by 0.5 units downwards if not enabled."
 setting_name = "vertical_tiling"
 
-[node name="BoolSetting3" parent="SettingsContainer/ScrollContainer/VBoxContainer" instance=ExtResource("3_p0act")]
+[node name="HorzScrollingBool" parent="SettingsContainer/ScrollContainer/VBoxContainer" instance=ExtResource("3_p0act")]
 layout_mode = 2
 setting_name = "horizontal_scrolling"
 
-[node name="FloatSetting" parent="SettingsContainer/ScrollContainer/VBoxContainer" instance=ExtResource("3_s05pv")]
+[node name="LayerBaseHeightFloat" parent="SettingsContainer/ScrollContainer/VBoxContainer" instance=ExtResource("3_s05pv")]
 layout_mode = 2
 setting_name = "layer_base_height"
 
-[node name="FloatSetting2" parent="SettingsContainer/ScrollContainer/VBoxContainer" instance=ExtResource("3_s05pv")]
+[node name="ILVertDistanceFloat" parent="SettingsContainer/ScrollContainer/VBoxContainer" instance=ExtResource("3_s05pv")]
 layout_mode = 2
 setting_name = "interlayer_vertical_distance"
 
-[node name="FloatSetting3" parent="SettingsContainer/ScrollContainer/VBoxContainer" instance=ExtResource("3_s05pv")]
+[node name="ILHorzDistanceFloat" parent="SettingsContainer/ScrollContainer/VBoxContainer" instance=ExtResource("3_s05pv")]
 layout_mode = 2
 setting_name = "interlayer_horizontal_distance"
 
-[node name="FloatSetting4" parent="SettingsContainer/ScrollContainer/VBoxContainer" instance=ExtResource("3_s05pv")]
+[node name="HorzDistanceFloat" parent="SettingsContainer/ScrollContainer/VBoxContainer" instance=ExtResource("3_s05pv")]
 layout_mode = 2
 setting_name = "horizontal_distance"
 
-[node name="FloatSetting5" parent="SettingsContainer/ScrollContainer/VBoxContainer" instance=ExtResource("3_s05pv")]
+[node name="VertDistanceFloat" parent="SettingsContainer/ScrollContainer/VBoxContainer" instance=ExtResource("3_s05pv")]
 layout_mode = 2
 setting_name = "vertical_distance"
 
-[node name="FloatSetting6" parent="SettingsContainer/ScrollContainer/VBoxContainer" instance=ExtResource("3_s05pv")]
+[node name="LayerBaseSpacingFloat" parent="SettingsContainer/ScrollContainer/VBoxContainer" instance=ExtResource("3_s05pv")]
 layout_mode = 2
 setting_name = "layer_base_spacing"
 
-[node name="PanelContainer5" type="PanelContainer" parent="SettingsContainer/ScrollContainer/VBoxContainer"]
+[node name="ShadowsHeader" type="PanelContainer" parent="SettingsContainer/ScrollContainer/VBoxContainer"]
 auto_translate_mode = 1
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_k33ic")
 
-[node name="MarginContainer" type="MarginContainer" parent="SettingsContainer/ScrollContainer/VBoxContainer/PanelContainer5"]
+[node name="MarginContainer" type="MarginContainer" parent="SettingsContainer/ScrollContainer/VBoxContainer/ShadowsHeader"]
 auto_translate_mode = 1
 layout_mode = 2
 theme_override_constants/margin_left = 5
@@ -169,26 +222,30 @@ theme_override_constants/margin_top = 5
 theme_override_constants/margin_right = 5
 theme_override_constants/margin_bottom = 5
 
-[node name="Label" type="Label" parent="SettingsContainer/ScrollContainer/VBoxContainer/PanelContainer5/MarginContainer"]
+[node name="Label" type="Label" parent="SettingsContainer/ScrollContainer/VBoxContainer/ShadowsHeader/MarginContainer"]
 auto_translate_mode = 1
 layout_mode = 2
 text = "Shadows"
 label_settings = SubResource("LabelSettings_ik1ui")
 
-[node name="FloatSetting13" parent="SettingsContainer/ScrollContainer/VBoxContainer" instance=ExtResource("3_s05pv")]
+[node name="ShadowsTexture" parent="SettingsContainer/ScrollContainer/VBoxContainer" instance=ExtResource("3_72m24")]
+layout_mode = 2
+setting_name = "shadows"
+
+[node name="ShadowOpacityFloat" parent="SettingsContainer/ScrollContainer/VBoxContainer" instance=ExtResource("3_s05pv")]
 layout_mode = 2
 setting_name = "shadow_opacity"
 
-[node name="BoolSetting4" parent="SettingsContainer/ScrollContainer/VBoxContainer" instance=ExtResource("3_p0act")]
+[node name="FoliageShadowsBool" parent="SettingsContainer/ScrollContainer/VBoxContainer" instance=ExtResource("3_p0act")]
 layout_mode = 2
 setting_name = "foliage_shadows"
 
-[node name="PanelContainer3" type="PanelContainer" parent="SettingsContainer/ScrollContainer/VBoxContainer"]
+[node name="NoPerFaceLayerXOffsetHeader" type="PanelContainer" parent="SettingsContainer/ScrollContainer/VBoxContainer"]
 auto_translate_mode = 1
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_k33ic")
 
-[node name="MarginContainer" type="MarginContainer" parent="SettingsContainer/ScrollContainer/VBoxContainer/PanelContainer3"]
+[node name="MarginContainer" type="MarginContainer" parent="SettingsContainer/ScrollContainer/VBoxContainer/NoPerFaceLayerXOffsetHeader"]
 auto_translate_mode = 1
 layout_mode = 2
 theme_override_constants/margin_left = 5
@@ -196,19 +253,32 @@ theme_override_constants/margin_top = 5
 theme_override_constants/margin_right = 5
 theme_override_constants/margin_bottom = 5
 
-[node name="Label" type="Label" parent="SettingsContainer/ScrollContainer/VBoxContainer/PanelContainer3/MarginContainer"]
+[node name="Label" type="Label" parent="SettingsContainer/ScrollContainer/VBoxContainer/NoPerFaceLayerXOffsetHeader/MarginContainer"]
 auto_translate_mode = 1
 layout_mode = 2
 text = "NoPerFaceLayerXOffset"
 label_settings = SubResource("LabelSettings_ik1ui")
 
-[node name="BoolSetting2" parent="SettingsContainer/ScrollContainer/VBoxContainer" instance=ExtResource("3_p0act")]
+[node name="NoPerFaceLayerXOffsetBool" parent="SettingsContainer/ScrollContainer/VBoxContainer" instance=ExtResource("3_p0act")]
 layout_mode = 2
 tooltip_text = "NoPerFaceLayerXOffset"
 setting_name = "no_per_face_layer_x_offset"
 
-[node name="FloatSetting12" parent="SettingsContainer/ScrollContainer/VBoxContainer" instance=ExtResource("3_s05pv")]
+[node name="LayerBaseXOffsetFloat" parent="SettingsContainer/ScrollContainer/VBoxContainer" instance=ExtResource("3_s05pv")]
 layout_mode = 2
 setting_name = "layer_base_x_offset"
+
+[node name="UnloadedSkyCover" type="PanelContainer" parent="SettingsContainer"]
+unique_name_in_owner = true
+visible = false
+material = SubResource("CanvasItemMaterial_mfasv")
+layout_mode = 2
+
+[node name="CenterContainer" type="CenterContainer" parent="SettingsContainer/UnloadedSkyCover"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="SettingsContainer/UnloadedSkyCover/CenterContainer"]
+layout_mode = 2
+text = "Load a sky to edit its properties."
 
 [connection signal="pressed" from="CollapserButton" to="." method="_on_collapser_button_pressed"]

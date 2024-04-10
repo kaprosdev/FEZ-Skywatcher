@@ -26,9 +26,16 @@ var density: float
 var fog_density: float
 var layers: Array[FezSkyLayer] ## List of [FezSkyLayer]s to render with this 
 var clouds: Array[String] ## List of names of textures to use for clouds. Must be names of textures in the sky's adjacent folder.
-var shadows: String ## Name of the texture to use for shadows. Must be a name of a texture in the sky's adjacent folder.
+var shadows: String: ## Name of the texture to use for shadows. Must be a name of a texture in the sky's adjacent folder.
+	set(texname):
+		shadows = texname
+		texture_changed.emit("shadows")
 var stars: String ## Name of the texture to use for stars. Must be a name of a texture in the sky's adjacent folder.
-var cloud_tint: String
+var cloud_tint: String:
+	set(texname):
+		cloud_tint = texname
+		init_cloud_colors()
+		texture_changed.emit("cloud_tint")
 var vertical_tiling: bool: ## If true, sky layers repeat at intervals up and down the skybox. Otherwise, there is only one set of sky layers centered on the origin.
 	set(val):
 		vertical_tiling = val
@@ -145,15 +152,7 @@ func load(path) -> void:
 	layer_base_x_offset = skydata.get("LayerBaseXOffset", 0)
 	
 	# initialize cloud colors (necessary for layer colors even if we don't have clouds)
-	if cloud_tint != "":
-		var cloudtint_image = get_texture(cloud_tint).get_image()
-		var cloudtint_region = cloudtint_image.get_region(Rect2i(0, cloudtint_image.get_height() / 2, cloudtint_image.get_width(), 1))
-		var tintdata = cloudtint_region.get_data()
-		for i in range(0, tintdata.size(), 4):
-			var cloudcolor = Color(tintdata.decode_u8(i) / 255.0, tintdata.decode_u8(i+1) / 255.0, tintdata.decode_u8(i+2) / 255.0, tintdata.decode_u8(i+3) / 255.0)
-			cloud_colors.push_back(cloudcolor)
-	else:
-		cloud_colors.push_back(Color.WHITE)
+	init_cloud_colors()
 	
 	# initialize fog colors
 	var bgimage = get_texture(background).get_image()
@@ -165,3 +164,14 @@ func load(path) -> void:
 
 	sky_loaded = true
 	new_sky_loaded.emit()
+
+func init_cloud_colors():
+	if cloud_tint != "":
+		var cloudtint_image = get_texture(cloud_tint).get_image()
+		var cloudtint_region = cloudtint_image.get_region(Rect2i(0, cloudtint_image.get_height() / 2, cloudtint_image.get_width(), 1))
+		var tintdata = cloudtint_region.get_data()
+		for i in range(0, tintdata.size(), 4):
+			var cloudcolor = Color(tintdata.decode_u8(i) / 255.0, tintdata.decode_u8(i+1) / 255.0, tintdata.decode_u8(i+2) / 255.0, tintdata.decode_u8(i+3) / 255.0)
+			cloud_colors.push_back(cloudcolor)
+	else:
+		cloud_colors.push_back(Color.WHITE)
