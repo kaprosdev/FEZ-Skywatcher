@@ -5,6 +5,7 @@ class_name FezSkyData
 
 signal new_sky_loaded
 signal vertical_tiling_changed
+signal texture_changed(tex_field: StringName)
 
 var sky_loaded: bool = false
 
@@ -16,7 +17,10 @@ var fog_colors: Array[Color] = []
 
 ## The name of the  Textures for the sky must be located in an adjacent folder with the same name in all lowercase.
 var sky_name: String
-var background: String ## Name of the background texture for the  Must be a name of a texture in the sky's adjacent folder.
+var background: String: ## Name of the background texture for the  Must be a name of a texture in the sky's adjacent folder.
+	set(texname):
+		background = texname
+		texture_changed.emit("background")
 var wind_speed: float
 var density: float
 var fog_density: float

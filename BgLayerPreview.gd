@@ -4,8 +4,12 @@ const bg_layer_defaultmat: ShaderMaterial = preload("res://sky_layer_mat.tres")
 @onready var bglayermat: ShaderMaterial = bg_layer_defaultmat.duplicate()
 
 var index: int
+var texture_name: String:
+	set(val):
+		texture_name = val
+		texture = FezSky.get_texture(texture_name)
 var texture: Texture2D
-var albedo: Color
+var albedo: Color = Color.MAGENTA
 var opacity: float
 
 @onready var layer_sides: Array[MeshInstance3D] = [$Sky_BG_Front, $Sky_BG_Left, $Sky_BG_Back, $Sky_BG_Right]

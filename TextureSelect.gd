@@ -6,7 +6,7 @@ signal texture_selected(tex_name: String)
 func _ready() -> void:
 	if FezSky._textures != null:
 		for tex_name in FezSky._textures:
-			$ItemList.add_item(tex_name, FezSky._textures[tex_name])
+			%ItemList.add_item(tex_name, FezSky._textures[tex_name])
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -15,7 +15,7 @@ func _process(delta: float) -> void:
 
 
 func select_texture(index: int = 0) -> void:
-	texture_selected.emit($ItemList.get_item_text($ItemList.get_selected_items()[0]))
+	texture_selected.emit(%ItemList.get_item_text(%ItemList.get_selected_items()[0]))
 	self.queue_free()
 
 

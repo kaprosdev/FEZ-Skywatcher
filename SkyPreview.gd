@@ -44,7 +44,12 @@ var layer_meshes: Array[Node]:
 func _ready() -> void:
 	resized.connect(_on_window_resized)
 	FezSky.new_sky_loaded.connect(update_sky)
-	
+	FezSky.texture_changed.connect(update_sky_textures)
+
+func update_sky_textures(texname: StringName):
+	if texname == &"background":
+		sky_bg_mat.set_shader_parameter("sky_texture", FezSky.get_texture(FezSky.background))
+
 func update_sky():
 	sky_bg_mat.set_shader_parameter("sky_texture", FezSky.get_texture(FezSky.background))
 	if bglayers.size() > 0:
@@ -55,10 +60,8 @@ func update_sky():
 	for i in FezSky.layers.size():
 		var layer_definition = FezSky.layers[i]
 		var layer = BG_Layer_Prefab.instantiate()
-		var layer_tex = FezSky.get_texture(layer_definition.name)
 		layer.index = i
-		layer.texture = layer_tex
-		layer.albedo = Color.MAGENTA
+		layer.texture_name = layer_definition.name
 		layer.opacity = layer_definition.opacity
 		bglayers.push_back(layer)
 		bglayers_root.add_child(layer)
