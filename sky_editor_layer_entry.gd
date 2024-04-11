@@ -1,9 +1,11 @@
-@tool
 extends MarginContainer
 
 var TEX_SELECT = preload("res://TextureSelect.tscn")
 
-var layer: FezSkyLayer
+var layer_index: int
+var layer: FezSkyLayer:
+	get:
+		return FezSky.layers[layer_index]
 
 func _ready() -> void:
 	update_all_setting_values()
@@ -26,12 +28,18 @@ func _on_name_texture_changed(value: String) -> void:
 	layer.name = value
 	%NameValue.text = value
 	%NameValue.icon = FezSky.get_texture(value)
+	print("emitting!")
+	FezSky.sky_changed.emit()
 
 func _on_in_front_value_changed(toggled_on: bool) -> void:
 	layer.in_front = toggled_on
+	FezSky.sky_changed.emit()
 
 func _on_opacity_value_changed(value: float) -> void:
 	layer.opacity = value
+	print("emitting!")
+	FezSky.sky_changed.emit()
 
 func _on_fog_tint_value_changed(value: float) -> void:
 	layer.fog_tint = value
+	FezSky.sky_changed.emit()

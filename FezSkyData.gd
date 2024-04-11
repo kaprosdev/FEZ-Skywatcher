@@ -4,8 +4,7 @@ class_name FezSkyData
 ##
 
 signal new_sky_loaded
-signal vertical_tiling_changed
-signal texture_changed(tex_field: StringName)
+signal sky_changed
 
 var sky_loaded: bool = false
 
@@ -20,7 +19,7 @@ var sky_name: String
 var background: String: ## Name of the background texture for the  Must be a name of a texture in the sky's adjacent folder.
 	set(texname):
 		background = texname
-		texture_changed.emit("background")
+		sky_changed.emit()
 var wind_speed: float
 var density: float
 var fog_density: float
@@ -29,17 +28,17 @@ var clouds: Array[String] ## List of names of textures to use for clouds. Must b
 var shadows: String: ## Name of the texture to use for shadows. Must be a name of a texture in the sky's adjacent folder.
 	set(texname):
 		shadows = texname
-		texture_changed.emit("shadows")
+		sky_changed.emit()
 var stars: String ## Name of the texture to use for stars. Must be a name of a texture in the sky's adjacent folder.
 var cloud_tint: String:
 	set(texname):
 		cloud_tint = texname
 		init_cloud_colors()
-		texture_changed.emit("cloud_tint")
+		sky_changed.emit()
 var vertical_tiling: bool: ## If true, sky layers repeat at intervals up and down the skybox. Otherwise, there is only one set of sky layers centered on the origin.
 	set(val):
 		vertical_tiling = val
-		vertical_tiling_changed.emit()
+		sky_changed.emit()
 var horizontal_scrolling: bool
 var layer_base_height: float
 var interlayer_vertical_distance: float

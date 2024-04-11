@@ -135,7 +135,7 @@ allow_lesser = true
 alignment = 2
 custom_arrow_step = 0.01
 
-[connection signal="pressed" from="PanelContainer/MarginContainer/VBoxContainer/NameTexture/HBoxContainer/NameValue" to="PanelContainer/MarginContainer" method="_on_name_texture_pressed"]
-[connection signal="toggled" from="PanelContainer/MarginContainer/VBoxContainer/InFrontBool/HBoxContainer/InFrontValue" to="PanelContainer/MarginContainer" method="_on_in_front_value_changed"]
-[connection signal="value_changed" from="PanelContainer/MarginContainer/VBoxContainer/OpacityFloat/HBoxContainer/OpacityValue" to="PanelContainer/MarginContainer" method="_on_opacity_value_changed"]
-[connection signal="value_changed" from="PanelContainer/MarginContainer/VBoxContainer/FogTintFloat/HBoxContainer/FogTintValue" to="PanelContainer/MarginContainer" method="_on_fog_tint_value_changed"]
+[connection signal="pressed" from="PanelContainer/MarginContainer/VBoxContainer/NameTexture/HBoxContainer/NameValue" to="." method="_on_name_texture_pressed"]
+[connection signal="toggled" from="PanelContainer/MarginContainer/VBoxContainer/InFrontBool/HBoxContainer/InFrontValue" to="." method="_on_in_front_value_changed"]
+[connection signal="value_changed" from="PanelContainer/MarginContainer/VBoxContainer/OpacityFloat/HBoxContainer/OpacityValue" to="." method="_on_opacity_value_changed"]
+[connection signal="value_changed" from="PanelContainer/MarginContainer/VBoxContainer/FogTintFloat/HBoxContainer/FogTintValue" to="." method="_on_fog_tint_value_changed"]

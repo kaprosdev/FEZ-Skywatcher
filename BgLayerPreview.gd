@@ -14,18 +14,16 @@ var opacity: float
 
 @onready var layer_sides: Array[MeshInstance3D] = [$Sky_BG_Front, $Sky_BG_Left, $Sky_BG_Back, $Sky_BG_Right]
 
-@export var always_on_top := false
-		
+var always_on_top := false
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	bglayermat.render_priority = index + 1
+	bglayermat.render_priority = index + (100 if always_on_top else 1)
 	bglayermat.set_shader_parameter("texture_albedo", texture)
 	bglayermat.set_shader_parameter("albedo", albedo)
 	bglayermat.set_shader_parameter("opacity", opacity)
 	bglayermat.set_shader_parameter("vertical_tiling", FezSky.vertical_tiling)
 	layer_sides.map(func(side: MeshInstance3D): side.material_override = bglayermat.duplicate())
-	FezSky.vertical_tiling_changed.connect(update_vertical_tiling)
 
 func update_vertical_tiling():
 	layer_sides.map(func(side: MeshInstance3D): side.material_override.set_shader_parameter("vertical_tiling", FezSky.vertical_tiling))
