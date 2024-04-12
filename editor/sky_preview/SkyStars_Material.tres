@@ -1,0 +1,9 @@
+[gd_resource type="ShaderMaterial" load_steps=2 format=3 uid="uid://dppj63b4x7ci5"]
+
+[ext_resource type="Shader" path="res://editor/sky_preview/SkyStars_Shader.gdshader" id="1_6yqq2"]
+
+[resource]
+render_priority = 0
+shader = ExtResource("1_6yqq2")
+shader_parameter/opacity = 1.0
+shader_parameter/tex_matrix = Basis(1, 0, 0, 0, 1, 0, 0, 0, 1)

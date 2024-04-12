@@ -1,14 +1,12 @@
-[gd_resource type="ShaderMaterial" load_steps=3 format=3 uid="uid://dfike6vtc3wvy"]
+[gd_resource type="ShaderMaterial" load_steps=2 format=3 uid="uid://dfike6vtc3wvy"]
 
-[ext_resource type="Shader" uid="uid://d1mim68oopbdp" path="res://editor/sky_preview/SkyLayer_Shader.tres" id="1_1mp06"]
-[ext_resource type="Texture2D" uid="uid://cfegjvak28qtn" path="res://above/above_c.png" id="1_w7rmi"]
+[ext_resource type="Shader" uid="uid://d1mim68oopbdp" path="res://editor/sky_preview/SkyLayer_Shader.tres" id="1_xv87t"]
 
 [resource]
 resource_local_to_scene = true
 render_priority = 0
-shader = ExtResource("1_1mp06")
+shader = ExtResource("1_xv87t")
 shader_parameter/albedo = Color(1, 1, 1, 1)
 shader_parameter/opacity = 1.0
 shader_parameter/vertical_tiling = false
 shader_parameter/tex_matrix = Basis(1, 0, 0, 0, 1, 0, 0, 0, 1)
-shader_parameter/texture_albedo = ExtResource("1_w7rmi")
