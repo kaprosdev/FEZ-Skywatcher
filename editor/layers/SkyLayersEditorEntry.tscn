@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://bte3a6r6kao1i"]
 
-[ext_resource type="Script" path="res://sky_editor_layer_entry.gd" id="1_i4ma7"]
+[ext_resource type="Script" path="res://editor/layers/SkyLayersEditorEntry.gd" id="1_i4ma7"]
 
 [node name="LayerEntry" type="MarginContainer"]
 offset_right = 179.0

@@ -1,6 +1,6 @@
 extends Container
 
-const LAYER_ENTRY = preload("res://SkyEditorLayerEntry.tscn")
+const LAYER_ENTRY = preload("res://editor/layers/SkyLayersEditorEntry.tscn")
 
 @export var MAX_HEIGHT = 100
 

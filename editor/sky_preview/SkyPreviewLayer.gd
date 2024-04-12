@@ -1,6 +1,6 @@
 extends Node3D
 
-const bg_layer_defaultmat: ShaderMaterial = preload("res://sky_layer_mat.tres")
+const bg_layer_defaultmat: ShaderMaterial = preload("res://editor/sky_preview/SkyLayer_Material.tres")
 @onready var bglayermat: ShaderMaterial = bg_layer_defaultmat.duplicate()
 
 var index: int

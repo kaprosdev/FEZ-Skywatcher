@@ -1,7 +1,7 @@
 [gd_scene load_steps=5 format=3 uid="uid://b8hqwu01nlrdh"]
 
-[ext_resource type="Script" path="res://BgLayerPreview.gd" id="1_s3p3t"]
-[ext_resource type="Script" path="res://sky_layer_group.gd" id="3_k3ow5"]
+[ext_resource type="Script" path="res://editor/sky_preview/SkyPreviewLayer.gd" id="1_s3p3t"]
+[ext_resource type="Script" path="res://editor/sky_preview/SkyPreviewLayerGroup.gd" id="3_k3ow5"]
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_6vxbk"]
 size = Vector2(1, 1)

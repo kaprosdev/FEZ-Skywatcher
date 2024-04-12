@@ -1,6 +1,6 @@
 extends MarginContainer
 
-var TEX_SELECT = preload("res://TextureSelect.tscn")
+var TEX_SELECT = preload("res://editor/settings/TextureSelect.tscn")
 
 var layer_index: int
 var layer: FezSkyLayer:

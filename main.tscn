@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=3 uid="uid://bnwapgffcuwr4"]
 
 [ext_resource type="Script" path="res://main.gd" id="1_mow1k"]
-[ext_resource type="PackedScene" uid="uid://v8kykgvjf7a7" path="res://SkyEditor.tscn" id="2_8seox"]
+[ext_resource type="PackedScene" uid="uid://v8kykgvjf7a7" path="res://editor/SkyEditor.tscn" id="2_8seox"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_exrvo"]
 bg_color = Color(0.156863, 0.156863, 0.156863, 0.501961)

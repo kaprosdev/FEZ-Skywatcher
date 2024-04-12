@@ -1,6 +1,6 @@
 extends Control
 
-const BG_Layer_Prefab = preload("res://BgLayerPreview.tscn")
+const BG_Layer_Prefab = preload("res://editor/sky_preview/SkyPreviewLayer.tscn")
 
 const BASE_DAY_LENGTH = (24 * 60 * 60) / 260.0
 const BASE_DAY_FACTOR = inverse_lerp(0, BASE_DAY_LENGTH, 1.0)
@@ -38,13 +38,15 @@ var layer_meshes: Array[Node]:
 		else:
 			return []
 
+var should_update_sky_next_frame: bool = false
+
 @export var sky_bg_mat: ShaderMaterial
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	resized.connect(_on_window_resized)
 	FezSky.new_sky_loaded.connect(update_sky)
-	FezSky.sky_changed.connect(update_sky)
+	FezSky.sky_changed.connect(func(): should_update_sky_next_frame = true)
 
 func update_sky():
 	sky_bg_mat.set_shader_parameter("sky_texture", FezSky.get_texture(FezSky.background))
@@ -100,6 +102,7 @@ func humanize_time():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
+	
 	time_of_day += (delta / BASE_DAY_LENGTH) * DAY_LENGTH_MULT
 	if time_of_day > 1.5:
 		time_of_day -= 1.0
@@ -127,6 +130,10 @@ func _process(delta: float) -> void:
 
 
 func _physics_process(delta: float) -> void:
+	if should_update_sky_next_frame:
+		update_sky()
+		should_update_sky_next_frame = false
+		
 	if not rotating:
 		if Input.is_action_pressed("preview_up"):
 			camera_center.position.y += PREVIEW_MOVE_SPEED

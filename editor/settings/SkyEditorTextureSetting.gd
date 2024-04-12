@@ -1,7 +1,7 @@
 @tool
 extends MarginContainer
 
-var TEX_SELECT = preload("res://TextureSelect.tscn")
+var TEX_SELECT = preload("res://editor/settings/TextureSelect.tscn")
 
 @export var setting_name: String:
 	set(val):

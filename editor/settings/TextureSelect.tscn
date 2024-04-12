@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://b2jr7lhb8jgke"]
 
-[ext_resource type="Script" path="res://TextureSelect.gd" id="1_givg1"]
+[ext_resource type="Script" path="res://editor/settings/TextureSelect.gd" id="1_givg1"]
 
 [node name="TextureSelect" type="Window"]
 initial_position = 2

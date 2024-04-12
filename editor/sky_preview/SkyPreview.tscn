@@ -1,7 +1,7 @@
 [gd_scene load_steps=9 format=3 uid="uid://dq5pqe2t36jib"]
 
-[ext_resource type="Script" path="res://SkyPreview.gd" id="1_vqnwa"]
-[ext_resource type="Material" uid="uid://cnskfst7nv7yw" path="res://sky_background_mat_3d.tres" id="3_c556a"]
+[ext_resource type="Script" path="res://editor/sky_preview/SkyPreview.gd" id="1_vqnwa"]
+[ext_resource type="Material" uid="uid://cnskfst7nv7yw" path="res://editor/sky_preview/SkyBG_Material.tres" id="3_c556a"]
 
 [sub_resource type="ViewportTexture" id="ViewportTexture_mtqvh"]
 viewport_path = NodePath("3DWorldViewport")
