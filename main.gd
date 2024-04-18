@@ -17,8 +17,11 @@ func _process(delta: float) -> void:
 func _on_file_id_pressed(id: int) -> void:
 	match id:
 		0:
+			$OpenFileDialog.current_dir = $SaveFileDialog.current_dir
 			$OpenFileDialog.show()
 		1:
+			$SaveFileDialog.current_dir = $OpenFileDialog.current_dir
+			$SaveFileDialog.current_file = FezSky.sky_name.to_lower() + ".fezsky.json"
 			$SaveFileDialog.show()
 
 
