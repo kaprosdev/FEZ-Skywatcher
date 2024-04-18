@@ -25,6 +25,13 @@ access = 2
 filters = PackedStringArray("*.fezsky.json")
 use_native_dialog = true
 
+[node name="SaveFileDialog" type="FileDialog" parent="."]
+initial_position = 2
+ok_button_text = "Save"
+access = 2
+filters = PackedStringArray("*.fezsky.json")
+use_native_dialog = true
+
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
 layout_mode = 1
 anchors_preset = 15
@@ -41,8 +48,10 @@ theme_override_styles/panel = SubResource("StyleBoxFlat_exrvo")
 layout_mode = 2
 
 [node name="File" type="PopupMenu" parent="VBoxContainer/PanelContainer/MenuBar"]
-item_count = 1
+item_count = 2
 item_0/text = "Open Sky..."
+item_1/text = "Save Sky As..."
+item_1/id = 1
 
 [node name="TabContainer" type="TabContainer" parent="VBoxContainer"]
 layout_mode = 2
@@ -66,4 +75,5 @@ theme_override_constants/v_separation = 10
 layout_mode = 2
 
 [connection signal="file_selected" from="OpenFileDialog" to="." method="_on_open_file_dialog_file_selected"]
+[connection signal="file_selected" from="SaveFileDialog" to="." method="_on_save_file_dialog_file_selected"]
 [connection signal="id_pressed" from="VBoxContainer/PanelContainer/MenuBar/File" to="." method="_on_file_id_pressed"]

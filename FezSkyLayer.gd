@@ -13,3 +13,12 @@ var in_front: bool
 var opacity: float
 ## How much (0-1) the sky layer should be tinted with the sky color.
 var fog_tint: float
+
+func to_dictionary() -> Dictionary:
+	var self_dict: Dictionary = {
+		"Name": name,
+		"InFront": in_front,
+		"Opacity": opacity,
+		"FogTint": fog_tint
+	}
+	return self_dict

@@ -18,6 +18,8 @@ func _on_file_id_pressed(id: int) -> void:
 	match id:
 		0:
 			$OpenFileDialog.show()
+		1:
+			$SaveFileDialog.show()
 
 
 func _on_open_file_dialog_file_selected(path: String) -> void:
@@ -31,3 +33,8 @@ func _on_open_file_dialog_file_selected(path: String) -> void:
 		#%TextureDisplay.add_child(texture_preview)
 		
 	print("Finished loading")
+
+
+func _on_save_file_dialog_file_selected(path: String) -> void:
+	FezSky.save(path)
+	pass # Replace with function body.

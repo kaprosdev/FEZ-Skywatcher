@@ -2,3 +2,6 @@
 .godot/
 
 icon.svg*
+
+*.png
+*.png.import

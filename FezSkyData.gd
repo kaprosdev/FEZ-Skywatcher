@@ -166,6 +166,48 @@ func load(path) -> void:
 	sky_loaded = true
 	new_sky_loaded.emit()
 
+func save(path: String):
+	# pass
+	
+	var save_dictionary = {
+		"Name": sky_name,
+		"Background": background,
+		"WindSpeed": wind_speed,
+		"Density": density,
+		"FogDensity": fog_density,
+		"Layers": layers.map(func(layer: FezSkyLayer): return layer.to_dictionary()),
+		"Clouds": clouds,
+		"Shadows": shadows,
+		"Stars": stars,
+		"CloudTint": cloud_tint,
+		"VerticalTiling": vertical_tiling,
+		"HorizontalScrolling": horizontal_scrolling,
+		"LayerBaseHeight": layer_base_height,
+		"InterLayerVerticalDistance": interlayer_vertical_distance,
+		"InterLayerHorizontalDistance": interlayer_horizontal_distance,
+		"HorizontalDistance": horizontal_distance,
+		"VerticalDistance": vertical_distance,
+		"LayerBaseSpacing": layer_base_spacing,
+		"WindParallax": wind_parallax,
+		"WindDistance": wind_distance,
+		"CloudsParallax": clouds_parallax,
+		"ShadowOpacity": shadow_opacity,
+		"FoliageShadows": foliage_shadows,
+		"NoPerFaceLayerXOffset": no_per_face_layer_x_offset,
+		"LayerBaseXOffset": layer_base_x_offset
+	}
+	
+	var savejson = JSON.stringify(save_dictionary, "  ", false)
+	print(savejson)
+	var save = FileAccess.open(path, FileAccess.WRITE)
+	save.store_string(savejson)
+	save.close()
+	return
+	
+	var textures_folder = path.get_basename()
+	if not DirAccess.dir_exists_absolute(textures_folder):
+		DirAccess.make_dir_recursive_absolute(textures_folder)
+
 func init_cloud_colors():
 	cloud_colors = []
 	if cloud_tint != "":
