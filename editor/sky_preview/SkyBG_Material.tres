@@ -14,7 +14,7 @@ width = 10
 height = 5
 
 [resource]
-render_priority = 0
+render_priority = -25
 shader = ExtResource("1_63ogx")
 shader_parameter/time_of_day = 1.5
 shader_parameter/sky_texture = SubResource("GradientTexture2D_0wdwc")

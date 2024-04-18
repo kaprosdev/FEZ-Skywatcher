@@ -1,6 +1,7 @@
 extends Control
 
 const BG_Layer_Prefab = preload("res://editor/sky_preview/SkyPreviewLayer.tscn")
+const Stars_Prefab = preload("res://editor/sky_preview/SkyPreviewStars.tscn")
 
 const BASE_DAY_LENGTH = (24 * 60 * 60) / 260.0
 const BASE_DAY_FACTOR = inverse_lerp(0, BASE_DAY_LENGTH, 1.0)
@@ -9,6 +10,7 @@ var time_of_day: float = 0.5
 
 const DEBUG_ALBEDOS_TEMP = [Color.MAGENTA, Color.FOREST_GREEN, Color.YELLOW]
 var bglayers: Array[Node3D] = []
+var stars: Node3D = null
 
 const PREVIEW_MOVE_SPEED = 1.0
 var level_size: Vector3 = Vector3(60, 54, 60)
@@ -49,12 +51,15 @@ func _ready() -> void:
 	FezSky.sky_changed.connect(func(): should_update_sky_next_frame = true)
 
 func update_sky():
-	sky_bg_mat.set_shader_parameter("sky_texture", FezSky.get_texture(FezSky.background))
-	if bglayers.size() > 0:
-		layers_loaded = false
-		for layer in bglayers:
-			layer.queue_free()
+	layers_loaded = false
+	for layer in bglayers:
+		layer.queue_free()
 	bglayers = []
+	if stars:
+		stars.queue_free()
+		stars = null
+	
+	sky_bg_mat.set_shader_parameter("sky_texture", FezSky.get_texture(FezSky.background))
 	for i in FezSky.layers.size():
 		var layer_definition = FezSky.layers[i]
 		var layer = BG_Layer_Prefab.instantiate()
@@ -64,6 +69,10 @@ func update_sky():
 		layer.always_on_top = layer_definition.in_front
 		bglayers.push_back(layer)
 		bglayers_root.add_child(layer)
+	if FezSky.stars != "":
+		stars = Stars_Prefab.instantiate()
+		stars.texture_name = FezSky.stars
+		bglayers_root.get_parent().add_child(stars)
 	layers_loaded = true
 
 func _on_window_resized() -> void:
@@ -102,7 +111,6 @@ func humanize_time():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
-	
 	time_of_day += (delta / BASE_DAY_LENGTH) * DAY_LENGTH_MULT
 	if time_of_day > 1.5:
 		time_of_day -= 1.0
@@ -120,6 +128,8 @@ func _process(delta: float) -> void:
 		sinceReached = 0.0
 		
 	bglayers_root.global_position = camera_center.global_position
+	if stars:
+		stars.global_position = camera_center.global_position
 	
 	if FezSky.sky_loaded and FezSky.fog_colors != null:
 		var cloud_color = FezSky.get_cloud_color(time_of_day)
@@ -167,11 +177,30 @@ func _physics_process(delta: float) -> void:
 	
 	# pass
 	
+	# ResizeStars()
+	if stars:
+		var camera_radius = sky_camera.size
+		stars.scale = Vector3(1, 5, 1) * (camera_radius * 2.0)
+		var stargroups = stars.get_children()
+		for starGroup in stargroups:
+			var num8 = stars.scale.x / (float(starGroup.texture.get_width()) / 16.0)
+			var num9 = stars.scale.y / (float(starGroup.texture.get_height()) / 16.0)
+			var num10 = 1.0 # offset
+			starGroup.texturematrix = Basis(Vector3(num8, 0, num10 - (num9 / 2.0)), Vector3(0, num9, num10 - (num9 / 2.0)), Vector3(0, 0, 1))
+	
 	# ResizeLayers()
 	if FezSky.sky_loaded == null or bglayers.size() == 0:
 		return
-	# var viewScale: float = self.size.x / 1280.0
 	var viewScale: float = 1.0
+	var h_ratio = size.x / 1.7777778
+	var v_ratio = size.y * 1.7777778
+	if size.x > v_ratio:
+		viewScale = v_ratio / 1280.0
+	else:
+		viewScale = h_ratio / 720.0
+	if viewScale < 1.0:
+		viewScale = 1.0
+	# var viewScale: float = 1.0
 	var vector: Vector3 = camera_center.global_position
 	var num7: float = (vector - level_size / 2.0).dot(get_inv_view_matrix_right())
 	var num8: float = vector.y - level_size.y / 2.0 - sky_camera.v_offset
@@ -181,8 +210,8 @@ func _physics_process(delta: float) -> void:
 		if sinceReached > 0.45:
 			sideOffset -= lastCamSide - num7
 		lastCamSide = num7
-	var camera_radius = sky_camera.size;
-	bglayers_root.scale = Vector3(1, 5, 1) * camera_radius * 2.0 / viewScale
+	var camera_radius = sky_camera.size
+	bglayers_root.scale = Vector3(1, 5, 1) * camera_radius * (2.0 / viewScale)
 	bglayers_root.position = Vector3(0.0, 0.0, 0.0)
 	for skyLayerMesh in layer_meshes:
 		var num10: float = skyLayerMesh.index / (1.0 if bglayers.size() == 1 else (bglayers.size() - 1.0))

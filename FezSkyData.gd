@@ -55,8 +55,8 @@ var no_per_face_layer_x_offset: bool
 var layer_base_x_offset: float
 
 
-func get_texture(name: String) -> Texture2D:
-	return _textures[name.to_lower()]
+func get_texture(texname: String) -> Texture2D:
+	return _textures[texname.to_lower()]
 
 func get_cloud_color(time: float) -> Color:
 	return get_timed_color(time, cloud_colors)
@@ -74,6 +74,7 @@ func get_timed_color(time: float, color_arr: Array[Color]) -> Color:
 	var color_interp: float = coloridx_f - floorf(coloridx_f)
 	var the_color = color_1.lerp(color_2, color_interp)
 	return the_color
+
 
 func load(path) -> void:
 	var file = FileAccess.open(path, FileAccess.READ)
@@ -106,7 +107,7 @@ func load(path) -> void:
 	_textures = texturedict
 
 	# Parse sky layers
-	var skylayers: Array[FezSkyLayer] = []
+	layers = []
 	for layerdata in skydata["Layers"]:
 		var layer: FezSkyLayer = FezSkyLayer.new()
 		layer.name = layerdata.get("Name", "")
@@ -116,10 +117,10 @@ func load(path) -> void:
 		layer.in_front = layerdata.get("InFront", false)
 		layer.opacity = layerdata.get("Opacity", 1)
 		layer.fog_tint = layerdata.get("FogTint", 0.3)
-		skylayers.push_back(layer)
-	layers = skylayers
+		layers.push_back(layer)
 
 	# Parse clouds
+	clouds = []
 	for cloud in skydata["Clouds"]:
 		if not _textures.has(cloud.to_lower()):
 			printerr("A cloud did not have a corresponding texture and will not be included!")
@@ -157,6 +158,7 @@ func load(path) -> void:
 	var bgimage = get_texture(background).get_image()
 	var fogregion = bgimage.get_region(Rect2i(0, bgimage.get_height() / 2, bgimage.get_width(), 1))
 	var fogdata = fogregion.get_data()
+	fog_colors = []
 	for i in range(0, fogdata.size(), 4):
 		var fogcolor = Color(fogdata.decode_u8(i) / 255.0, fogdata.decode_u8(i+1) / 255.0, fogdata.decode_u8(i+2) / 255.0, fogdata.decode_u8(i+3) / 255.0)
 		fog_colors.push_back(fogcolor)
@@ -165,6 +167,7 @@ func load(path) -> void:
 	new_sky_loaded.emit()
 
 func init_cloud_colors():
+	cloud_colors = []
 	if cloud_tint != "":
 		var cloudtint_image = get_texture(cloud_tint).get_image()
 		var cloudtint_region = cloudtint_image.get_region(Rect2i(0, cloudtint_image.get_height() / 2, cloudtint_image.get_width(), 1))

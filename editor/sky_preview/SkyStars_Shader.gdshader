@@ -1,5 +1,5 @@
 shader_type spatial;
-render_mode blend_mix, unshaded;
+render_mode blend_mix, depth_draw_never, unshaded;
 
 uniform sampler2D texture_albedo : source_color, repeat_enable, filter_nearest;
 uniform sampler2D screen_texture : hint_screen_texture, repeat_disable, filter_nearest;
@@ -25,7 +25,7 @@ void fragment() {
 	// but I couldn't find a good way to replicate D3DRS_DESTBLEND equal to D3DBLEND_INVDESTCOLOR using blend_add
 	// http://www.directxtutorial.com/Lesson.aspx?lessonid=9-4-10 scroll down to "Set the Source and Destination Factors"
 	// https://learn.microsoft.com/en-us/windows/win32/direct3d9/alpha-texture-blending is the really basic formula for the blending
-	vec4 color = min(stars_color+(screen_color * inv_screen_color),vec4(1.0));
+	vec4 color = min(stars_color+screen_color,vec4(1.0));
 	ALBEDO = color.rgb;
 	ALPHA = color.a;
 }

@@ -1,0 +1,38 @@
+[gd_scene load_steps=5 format=3 uid="uid://l7s4o5o8mm8b"]
+
+[ext_resource type="Script" path="res://editor/sky_preview/SkyPreviewStars.gd" id="1_87768"]
+[ext_resource type="Script" path="res://editor/sky_preview/SkyPreviewLayerGroup.gd" id="2_xkjcv"]
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_6vxbk"]
+size = Vector2(1, 1)
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_fvcet"]
+flip_faces = true
+size = Vector2(1, 1)
+
+[node name="Stars" type="Node3D"]
+script = ExtResource("1_87768")
+
+[node name="Sky_BG_Front" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 7.64274e-15, 1.74846e-07, 1.74846e-07, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, -0.499719)
+mesh = SubResource("PlaneMesh_6vxbk")
+skeleton = NodePath("../../..")
+script = ExtResource("2_xkjcv")
+side = 3
+
+[node name="Sky_BG_Right" type="MeshInstance3D" parent="."]
+transform = Transform3D(-4.37114e-08, 1, 4.37114e-08, -3.82138e-15, 4.37114e-08, -1, -1, -4.37114e-08, 1.91069e-15, 0.499719, 0, 0)
+mesh = SubResource("PlaneMesh_fvcet")
+script = ExtResource("2_xkjcv")
+side = 2
+
+[node name="Sky_BG_Back" type="MeshInstance3D" parent="."]
+transform = Transform3D(-1, -8.74228e-08, 1.74846e-07, -1.74846e-07, -4.37114e-08, -1, 8.74228e-08, -1, 4.37114e-08, 0, 0, 0.499719)
+mesh = SubResource("PlaneMesh_6vxbk")
+script = ExtResource("2_xkjcv")
+side = 1
+
+[node name="Sky_BG_Left" type="MeshInstance3D" parent="."]
+transform = Transform3D(1.31134e-07, -1, -4.37114e-08, -3.82136e-15, 4.37114e-08, -1, 1, 1.31134e-07, 1.91069e-15, -0.499719, 0, 0)
+mesh = SubResource("PlaneMesh_fvcet")
+script = ExtResource("2_xkjcv")

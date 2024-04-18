@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://dq5pqe2t36jib"]
+[gd_scene load_steps=8 format=3 uid="uid://dq5pqe2t36jib"]
 
 [ext_resource type="Script" path="res://editor/sky_preview/SkyPreview.gd" id="1_vqnwa"]
 [ext_resource type="Material" uid="uid://cnskfst7nv7yw" path="res://editor/sky_preview/SkyBG_Material.tres" id="3_c556a"]
@@ -9,9 +9,6 @@ viewport_path = NodePath("3DWorldViewport")
 [sub_resource type="BoxMesh" id="BoxMesh_0m6f8"]
 flip_faces = true
 size = Vector3(360, 360, 360)
-
-[sub_resource type="PlaneMesh" id="PlaneMesh_6vxbk"]
-size = Vector2(1, 1)
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_87qvt"]
 blend_mode = 1
@@ -72,26 +69,6 @@ transform = Transform3D(1, 0, 0, 0, -1, -1.50996e-07, 0, 1.50996e-07, -1, 0, 0, 
 mesh = SubResource("BoxMesh_0m6f8")
 skeleton = NodePath("../../..")
 surface_material_override/0 = ExtResource("3_c556a")
-
-[node name="Stars" type="Node3D" parent="3DWorldViewport/3DWorld/CameraCenter/Camera"]
-visible = false
-
-[node name="Stars_Front" type="MeshInstance3D" parent="3DWorldViewport/3DWorld/CameraCenter/Camera/Stars"]
-transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, -0.499719)
-mesh = SubResource("PlaneMesh_6vxbk")
-skeleton = NodePath("../../..")
-
-[node name="Stars_Right" type="MeshInstance3D" parent="3DWorldViewport/3DWorld/CameraCenter/Camera/Stars"]
-transform = Transform3D(-4.37114e-08, -1, 4.37114e-08, 0, -4.37114e-08, -1, 1, -4.37114e-08, 1.91069e-15, 0.499719, 0, 0)
-mesh = SubResource("PlaneMesh_6vxbk")
-
-[node name="Stars_Back" type="MeshInstance3D" parent="3DWorldViewport/3DWorld/CameraCenter/Camera/Stars"]
-transform = Transform3D(-1, -8.74228e-08, 3.82137e-15, 0, -4.37114e-08, -1, 8.74228e-08, -1, 4.37114e-08, 0, 0, 0.499719)
-mesh = SubResource("PlaneMesh_6vxbk")
-
-[node name="Stars_Left" type="MeshInstance3D" parent="3DWorldViewport/3DWorld/CameraCenter/Camera/Stars"]
-transform = Transform3D(-4.37114e-08, 1, -4.37114e-08, 0, -4.37114e-08, -1, -1, -4.37114e-08, 1.91069e-15, -0.499719, 0, 0)
-mesh = SubResource("PlaneMesh_6vxbk")
 
 [node name="BGLayers" type="Node3D" parent="3DWorldViewport/3DWorld"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -200, 0)
