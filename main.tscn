@@ -1,7 +1,8 @@
-[gd_scene load_steps=4 format=3 uid="uid://bnwapgffcuwr4"]
+[gd_scene load_steps=5 format=3 uid="uid://bnwapgffcuwr4"]
 
 [ext_resource type="Script" path="res://main.gd" id="1_mow1k"]
 [ext_resource type="PackedScene" uid="uid://v8kykgvjf7a7" path="res://editor/SkyEditor.tscn" id="2_8seox"]
+[ext_resource type="PackedScene" uid="uid://blxfovnib25m5" path="res://TextureExplorer.tscn" id="3_55h2w"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_exrvo"]
 bg_color = Color(0.156863, 0.156863, 0.156863, 0.501961)
@@ -56,22 +57,13 @@ item_1/id = 1
 [node name="TabContainer" type="TabContainer" parent="VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
-current_tab = 1
-
-[node name="Texture Explorer" type="ScrollContainer" parent="VBoxContainer/TabContainer"]
-visible = false
-layout_mode = 2
-size_flags_vertical = 3
-
-[node name="TextureDisplay" type="HFlowContainer" parent="VBoxContainer/TabContainer/Texture Explorer"]
-unique_name_in_owner = true
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
-theme_override_constants/h_separation = 10
-theme_override_constants/v_separation = 10
+current_tab = 0
 
 [node name="Sky Editor" parent="VBoxContainer/TabContainer" instance=ExtResource("2_8seox")]
+layout_mode = 2
+
+[node name="Textures" parent="VBoxContainer/TabContainer" instance=ExtResource("3_55h2w")]
+visible = false
 layout_mode = 2
 
 [connection signal="file_selected" from="OpenFileDialog" to="." method="_on_open_file_dialog_file_selected"]

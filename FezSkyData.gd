@@ -9,7 +9,7 @@ signal sky_changed
 var sky_loaded: bool = false
 
 ## Internal lookup table of all textures associated with the 
-var _textures: Dictionary
+var _textures: Dictionary = {}
 
 var cloud_colors: Array[Color] = []
 var fog_colors: Array[Color] = []
@@ -57,6 +57,10 @@ var layer_base_x_offset: float
 
 func get_texture(texname: String) -> Texture2D:
 	return _textures[texname.to_lower()]
+
+func add_texture(texname: String, texture: Texture2D) -> void:
+	_textures[texname] = texture
+	sky_changed.emit()
 
 func get_cloud_color(time: float) -> Color:
 	return get_timed_color(time, cloud_colors)

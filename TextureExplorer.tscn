@@ -1,0 +1,109 @@
+[gd_scene load_steps=8 format=3 uid="uid://blxfovnib25m5"]
+
+[ext_resource type="Script" path="res://texture_explorer.gd" id="1_jccit"]
+
+[sub_resource type="FontVariation" id="FontVariation_q6vx7"]
+variation_embolden = 1.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ymwrw"]
+bg_color = Color(0.537255, 0.0313726, 0, 0.501961)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_82wov"]
+bg_color = Color(0.536458, 0.0319759, 0, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ty1aq"]
+bg_color = Color(0.833333, 0.0496713, 0, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_koime"]
+bg_color = Color(0.536458, 0.0319759, 0, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_p1s56"]
+bg_color = Color(0.713542, 0.0425311, 0, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
+[node name="TextureExplorer" type="VBoxContainer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_jccit")
+_texture_listing = NodePath("TextureListingContainer/TextureListing")
+_delete_button = NodePath("PanelContainer/HBoxContainer/DeleteTextureButton")
+
+[node name="PanelContainer" type="PanelContainer" parent="."]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="PanelContainer"]
+layout_mode = 2
+alignment = 2
+
+[node name="DeleteTextureButton" type="Button" parent="PanelContainer/HBoxContainer"]
+auto_translate_mode = 1
+custom_minimum_size = Vector2(31, 31)
+layout_mode = 2
+focus_mode = 0
+theme_override_fonts/font = SubResource("FontVariation_q6vx7")
+theme_override_font_sizes/font_size = 16
+theme_override_styles/disabled = SubResource("StyleBoxFlat_ymwrw")
+theme_override_styles/hover_pressed = SubResource("StyleBoxFlat_82wov")
+theme_override_styles/hover = SubResource("StyleBoxFlat_ty1aq")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_koime")
+theme_override_styles/normal = SubResource("StyleBoxFlat_p1s56")
+disabled = true
+text = "⨉"
+
+[node name="AddTextureButton" type="Button" parent="PanelContainer/HBoxContainer"]
+layout_mode = 2
+focus_mode = 0
+theme_type_variation = &"GreenButton"
+text = "＋ Add"
+
+[node name="TextureListingContainer" type="ScrollContainer" parent="."]
+auto_translate_mode = 1
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="TextureListing" type="ItemList" parent="TextureListingContainer"]
+auto_translate_mode = 1
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/v_separation = 10
+theme_override_constants/h_separation = 10
+select_mode = 1
+max_columns = 0
+icon_mode = 0
+fixed_icon_size = Vector2i(150, 150)
+
+[node name="AddTextureFileDialog" type="FileDialog" parent="."]
+title = "Add a Texture"
+ok_button_text = "Open"
+file_mode = 0
+access = 2
+filters = PackedStringArray("*.png")
+use_native_dialog = true
+
+[connection signal="pressed" from="PanelContainer/HBoxContainer/AddTextureButton" to="." method="_on_add_texture_button_pressed"]
+[connection signal="empty_clicked" from="TextureListingContainer/TextureListing" to="." method="_on_texture_listing_empty_clicked"]
+[connection signal="multi_selected" from="TextureListingContainer/TextureListing" to="." method="_on_texture_listing_multi_selected"]
+[connection signal="file_selected" from="AddTextureFileDialog" to="." method="_on_open_texture_dialog_file_selected"]

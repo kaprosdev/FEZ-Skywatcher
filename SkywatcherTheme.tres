@@ -1,0 +1,44 @@
+[gd_resource type="Theme" load_steps=5 format=3 uid="uid://b3iyb4ealiyvb"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_sflyn"]
+content_margin_left = 2.0
+content_margin_right = 2.0
+bg_color = Color(0, 0.552083, 0.227336, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_p3ewv"]
+content_margin_left = 2.0
+content_margin_right = 2.0
+bg_color = Color(0, 0.302083, 0.124391, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_uygxh"]
+content_margin_left = 2.0
+content_margin_right = 2.0
+bg_color = Color(0, 0.34375, 0.141549, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_80a87"]
+content_margin_left = 2.0
+content_margin_right = 2.0
+bg_color = Color(0, 0.302083, 0.124391, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
+[resource]
+GreenButton/base_type = &"Button"
+GreenButton/styles/hover = SubResource("StyleBoxFlat_sflyn")
+GreenButton/styles/hover_pressed = SubResource("StyleBoxFlat_p3ewv")
+GreenButton/styles/normal = SubResource("StyleBoxFlat_uygxh")
+GreenButton/styles/pressed = SubResource("StyleBoxFlat_80a87")

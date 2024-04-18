@@ -24,6 +24,10 @@ FezSky="*res://FezSkyData.gd"
 window/size/viewport_width=1200
 window/size/viewport_height=720
 
+[gui]
+
+theme/custom="res://SkywatcherTheme.tres"
+
 [input]
 
 ui_left={
