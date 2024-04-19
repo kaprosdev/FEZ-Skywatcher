@@ -1,5 +1,6 @@
 extends Control
 
+const DELETE_CONFIRM = "Deleting %s texture(s) from the project:\n\n%s\n\nAre you sure?"
 
 @export_node_path("ItemList") var _texture_listing: NodePath
 var texture_listing: ItemList:
@@ -42,4 +43,20 @@ func _on_texture_listing_multi_selected(index: int, selected: bool) -> void:
 func _on_texture_listing_empty_clicked(at_position: Vector2, mouse_button_index: int) -> void:
 	texture_listing.deselect_all()
 	delete_button.disabled = not texture_listing.is_anything_selected()
+	pass # Replace with function body.
+
+
+func _on_delete_texture_button_pressed() -> void:
+	var to_be_deleted = texture_listing.get_selected_items()
+	var to_be_deleted_names = Array(to_be_deleted).map(func(idx): return texture_listing.get_item_text(idx))
+	$DeleteConfirmDialog.dialog_text = DELETE_CONFIRM % [to_be_deleted.size(), ", ".join(to_be_deleted_names)]
+	$DeleteConfirmDialog.show()
+	pass # Replace with function body.
+
+
+func _on_delete_confirm_dialog_confirmed() -> void:
+	var to_be_deleted = texture_listing.get_selected_items()
+	var to_be_deleted_names = Array(to_be_deleted).map(func(idx): return texture_listing.get_item_text(idx))
+	to_be_deleted_names.map(func(texname): FezSky.remove_texture(texname, false))
+	FezSky.sky_changed.emit()
 	pass # Replace with function body.

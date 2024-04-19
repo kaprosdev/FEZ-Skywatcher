@@ -1,7 +1,5 @@
 extends Control
 
-const preview_prefab = preload("res://SingleTexturePreview.tscn")
-
 var sky: FezSky = null
 
 # Called when the node enters the scene tree for the first time.

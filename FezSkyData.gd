@@ -3,6 +3,8 @@ class_name FezSkyData
 ## Data representation of a FEZ sky asset.
 ##
 
+const MISSING_TEXTURE = preload("res://missing_texture.svg")
+
 signal new_sky_loaded
 signal sky_changed
 
@@ -56,11 +58,19 @@ var layer_base_x_offset: float
 
 
 func get_texture(texname: String) -> Texture2D:
-	return _textures[texname.to_lower()]
+	if _textures.has(texname.to_lower()):
+		return _textures[texname.to_lower()]
+	else:
+		return MISSING_TEXTURE
 
 func add_texture(texname: String, texture: Texture2D) -> void:
 	_textures[texname] = texture
 	sky_changed.emit()
+
+func remove_texture(texname: String, should_emit: bool = true) -> void:
+	_textures.erase(texname.to_lower())
+	if should_emit:
+		sky_changed.emit()
 
 func get_cloud_color(time: float) -> Color:
 	return get_timed_color(time, cloud_colors)

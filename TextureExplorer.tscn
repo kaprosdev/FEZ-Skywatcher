@@ -1,6 +1,6 @@
 [gd_scene load_steps=8 format=3 uid="uid://blxfovnib25m5"]
 
-[ext_resource type="Script" path="res://texture_explorer.gd" id="1_jccit"]
+[ext_resource type="Script" path="res://TextureExplorer.gd" id="1_jccit"]
 
 [sub_resource type="FontVariation" id="FontVariation_q6vx7"]
 variation_embolden = 1.0
@@ -103,7 +103,15 @@ access = 2
 filters = PackedStringArray("*.png")
 use_native_dialog = true
 
+[node name="DeleteConfirmDialog" type="ConfirmationDialog" parent="."]
+title = "Confirm deletion"
+initial_position = 2
+ok_button_text = "Yes"
+cancel_button_text = "No"
+
+[connection signal="pressed" from="PanelContainer/HBoxContainer/DeleteTextureButton" to="." method="_on_delete_texture_button_pressed"]
 [connection signal="pressed" from="PanelContainer/HBoxContainer/AddTextureButton" to="." method="_on_add_texture_button_pressed"]
 [connection signal="empty_clicked" from="TextureListingContainer/TextureListing" to="." method="_on_texture_listing_empty_clicked"]
 [connection signal="multi_selected" from="TextureListingContainer/TextureListing" to="." method="_on_texture_listing_multi_selected"]
 [connection signal="file_selected" from="AddTextureFileDialog" to="." method="_on_open_texture_dialog_file_selected"]
+[connection signal="confirmed" from="DeleteConfirmDialog" to="." method="_on_delete_confirm_dialog_confirmed"]

@@ -11,6 +11,7 @@ var TEX_SELECT = preload("res://editor/settings/TextureSelect.tscn")
 func _ready() -> void:
 	if not Engine.is_editor_hint():
 		FezSky.new_sky_loaded.connect(update_setting_value)
+		FezSky.sky_changed.connect(update_setting_value)
 
 func update_setting_value():
 	var texname = FezSky.get(setting_name)
