@@ -35,7 +35,6 @@ func _on_open_texture_dialog_file_selected(path: String) -> void:
 
 
 func _on_texture_listing_multi_selected(index: int, selected: bool) -> void:
-	print("multiselect triggered! " + str(index) + ": " + str(selected))
 	delete_button.disabled = not texture_listing.is_anything_selected()
 	pass # Replace with function body.
 

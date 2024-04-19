@@ -216,11 +216,13 @@ func save(path: String):
 	var save = FileAccess.open(path, FileAccess.WRITE)
 	save.store_string(savejson)
 	save.close()
-	return
 	
-	var textures_folder = path.get_basename()
-	if not DirAccess.dir_exists_absolute(textures_folder):
-		DirAccess.make_dir_recursive_absolute(textures_folder)
+	var textures_folder_path = path.get_base_dir() + "/" + sky_name.to_lower()
+	if not DirAccess.dir_exists_absolute(textures_folder_path):
+		DirAccess.make_dir_recursive_absolute(textures_folder_path)
+	for texname in _textures.keys():
+		_textures[texname].get_image().save_png(textures_folder_path + "/" + texname.to_lower() + ".png")
+	return
 
 func init_cloud_colors():
 	cloud_colors = []
