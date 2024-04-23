@@ -11,7 +11,8 @@ func _ready() -> void:
 		FezSky.new_sky_loaded.connect(update_setting_value)
 
 func update_setting_value():
-	%SettingValue.button_pressed = FezSky.get(setting_name)
+	%SettingValue.set_pressed_no_signal(FezSky.get(setting_name))
 	
 func _on_setting_value_changed(value: bool) -> void:
-	FezSky.set(setting_name, value)
+	var action_name = "%s %s" % [("Enable" if value else "Disable"), setting_name.capitalize()]
+	EditorState.alter_sky(action_name, setting_name, value, [update_setting_value])

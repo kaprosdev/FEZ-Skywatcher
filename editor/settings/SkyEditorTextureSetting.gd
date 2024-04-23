@@ -23,7 +23,8 @@ func update_setting_value():
 		%SettingButton.icon = null
 	
 func _on_setting_value_changed(value: String) -> void:
-	FezSky.set(setting_name, value.get_basename())
+	var action_name = "Modify %s Texture" % setting_name.capitalize()
+	EditorState.alter_sky(action_name, setting_name, value.get_basename(), [update_setting_value])
 	update_setting_value()
 
 func _on_setting_button_pressed() -> void:

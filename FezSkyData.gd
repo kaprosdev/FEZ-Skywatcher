@@ -21,6 +21,7 @@ var sky_name: String
 var background: String: ## Name of the background texture for the  Must be a name of a texture in the sky's adjacent folder.
 	set(texname):
 		background = texname
+		init_fog_colors()
 		sky_changed.emit()
 var wind_speed: float
 var density: float
@@ -89,8 +90,40 @@ func get_timed_color(time: float, color_arr: Array[Color]) -> Color:
 	var the_color = color_1.lerp(color_2, color_interp)
 	return the_color
 
+func new_sky() -> void:
+	_textures = {}
+	layers = []
+	clouds = []
+	background = ""
+	wind_speed = 1.0
+	density = 1.0
+	fog_density = 0.02
+	shadows = ""
+	stars = ""
+	cloud_tint = ""
+	vertical_tiling = false
+	horizontal_scrolling = false
+	layer_base_height = 0.5
+	interlayer_vertical_distance = 0.1
+	interlayer_horizontal_distance = 0.1
+	horizontal_distance = 0.2
+	vertical_distance = 0.2
+	layer_base_spacing = 0
+	wind_parallax = 0
+	wind_distance = 0
+	clouds_parallax = 1.0
+	shadow_opacity = 0.7
+	foliage_shadows = false
+	no_per_face_layer_x_offset = false
+	layer_base_x_offset = 0
+	
+	init_cloud_colors()
+	init_fog_colors()
+	
+	sky_loaded = true
+	new_sky_loaded.emit()
 
-func load(path) -> void:
+func load_sky(path) -> void:
 	var file = FileAccess.open(path, FileAccess.READ)
 	var file_contents = file.get_as_text()
 	var json = JSON.new()
@@ -169,13 +202,7 @@ func load(path) -> void:
 	init_cloud_colors()
 	
 	# initialize fog colors
-	var bgimage = get_texture(background).get_image()
-	var fogregion = bgimage.get_region(Rect2i(0, bgimage.get_height() / 2, bgimage.get_width(), 1))
-	var fogdata = fogregion.get_data()
-	fog_colors = []
-	for i in range(0, fogdata.size(), 4):
-		var fogcolor = Color(fogdata.decode_u8(i) / 255.0, fogdata.decode_u8(i+1) / 255.0, fogdata.decode_u8(i+2) / 255.0, fogdata.decode_u8(i+3) / 255.0)
-		fog_colors.push_back(fogcolor)
+	init_fog_colors()
 
 	sky_loaded = true
 	new_sky_loaded.emit()
@@ -235,3 +262,12 @@ func init_cloud_colors():
 			cloud_colors.push_back(cloudcolor)
 	else:
 		cloud_colors.push_back(Color.WHITE)
+	
+func init_fog_colors():
+	var bgimage = get_texture(background).get_image()
+	var fogregion = bgimage.get_region(Rect2i(0, bgimage.get_height() / 2, bgimage.get_width(), 1))
+	var fogdata = fogregion.get_data()
+	fog_colors = []
+	for i in range(0, fogdata.size(), 4):
+		var fogcolor = Color(fogdata.decode_u8(i) / 255.0, fogdata.decode_u8(i+1) / 255.0, fogdata.decode_u8(i+2) / 255.0, fogdata.decode_u8(i+3) / 255.0)
+		fog_colors.push_back(fogcolor)

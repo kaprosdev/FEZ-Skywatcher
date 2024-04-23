@@ -257,7 +257,6 @@ layout_mode = 2
 
 [node name="UnloadedSkyCover" type="PanelContainer" parent="SettingsContainer"]
 unique_name_in_owner = true
-visible = false
 material = SubResource("CanvasItemMaterial_mfasv")
 layout_mode = 2
 
@@ -266,6 +265,6 @@ layout_mode = 2
 
 [node name="Label" type="Label" parent="SettingsContainer/UnloadedSkyCover/CenterContainer"]
 layout_mode = 2
-text = "Load a sky to edit its properties."
+text = "Create or load a sky to edit properties."
 
 [connection signal="pressed" from="CollapserButton" to="." method="_on_collapser_button_pressed"]

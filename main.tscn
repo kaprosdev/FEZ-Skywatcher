@@ -1,7 +1,8 @@
-[gd_scene load_steps=5 format=3 uid="uid://bnwapgffcuwr4"]
+[gd_scene load_steps=6 format=3 uid="uid://bnwapgffcuwr4"]
 
-[ext_resource type="Script" path="res://main.gd" id="1_mow1k"]
+[ext_resource type="Script" path="res://ProgramWindow.gd" id="1_mow1k"]
 [ext_resource type="PackedScene" uid="uid://v8kykgvjf7a7" path="res://editor/SkyEditor.tscn" id="2_8seox"]
+[ext_resource type="Script" path="res://EditMenu.gd" id="2_xfpvp"]
 [ext_resource type="PackedScene" uid="uid://blxfovnib25m5" path="res://TextureExplorer.tscn" id="3_55h2w"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_exrvo"]
@@ -49,10 +50,30 @@ theme_override_styles/panel = SubResource("StyleBoxFlat_exrvo")
 layout_mode = 2
 
 [node name="File" type="PopupMenu" parent="VBoxContainer/PanelContainer/MenuBar"]
+size = Vector2i(123, 147)
+item_count = 6
+item_0/text = "New Sky"
+item_0/id = 1
+item_1/text = "Open Sky..."
+item_1/id = 2
+item_2/text = "Save Sky"
+item_2/id = 3
+item_3/text = "Save Sky As..."
+item_3/id = 4
+item_4/id = 100
+item_4/separator = true
+item_5/text = "Quit"
+item_5/id = 5
+
+[node name="Edit" type="PopupMenu" parent="VBoxContainer/PanelContainer/MenuBar"]
 item_count = 2
-item_0/text = "Open Sky..."
-item_1/text = "Save Sky As..."
-item_1/id = 1
+item_0/text = "Undo"
+item_0/id = 1
+item_0/disabled = true
+item_1/text = "Redo"
+item_1/id = 2
+item_1/disabled = true
+script = ExtResource("2_xfpvp")
 
 [node name="TabContainer" type="TabContainer" parent="VBoxContainer"]
 layout_mode = 2
@@ -69,3 +90,4 @@ layout_mode = 2
 [connection signal="file_selected" from="OpenFileDialog" to="." method="_on_open_file_dialog_file_selected"]
 [connection signal="file_selected" from="SaveFileDialog" to="." method="_on_save_file_dialog_file_selected"]
 [connection signal="id_pressed" from="VBoxContainer/PanelContainer/MenuBar/File" to="." method="_on_file_id_pressed"]
+[connection signal="id_pressed" from="VBoxContainer/PanelContainer/MenuBar/Edit" to="VBoxContainer/PanelContainer/MenuBar/Edit" method="_on_id_pressed"]
