@@ -19,12 +19,12 @@ grow_vertical = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 horizontal_scroll_mode = 0
+script = ExtResource("1_hms4x")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
-script = ExtResource("1_hms4x")
 
 [node name="NoLayersEntry" type="MarginContainer" parent="VBoxContainer"]
 unique_name_in_owner = true

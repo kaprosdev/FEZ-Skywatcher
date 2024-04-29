@@ -9,6 +9,7 @@ const DEFAULTSKYBG = preload("res://simpleskybg.tres")
 signal new_sky_loaded
 signal sky_changed
 signal clouds_changed
+signal layers_changed
 
 var sky_loaded: bool = false
 

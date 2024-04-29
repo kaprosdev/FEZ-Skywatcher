@@ -1,20 +1,43 @@
-[gd_scene load_steps=2 format=3 uid="uid://bte3a6r6kao1i"]
+[gd_scene load_steps=5 format=3 uid="uid://bte3a6r6kao1i"]
 
 [ext_resource type="Script" path="res://editor/layers/SkyLayersEditorEntry.gd" id="1_i4ma7"]
 
-[node name="LayerEntry" type="MarginContainer"]
-offset_right = 179.0
-offset_bottom = 145.0
+[sub_resource type="FontVariation" id="FontVariation_7kh3k"]
+variation_embolden = 1.0
+
+[sub_resource type="FontVariation" id="FontVariation_1s7rp"]
+variation_transform = Transform2D(1, 0.15, 0, 1, 0, 0)
+
+[sub_resource type="LabelSettings" id="LabelSettings_2gk0c"]
+font = SubResource("FontVariation_1s7rp")
+font_color = Color(0.630208, 0.630208, 0.630208, 1)
+
+[node name="LayerEntry" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+offset_left = 4.0
+offset_top = 2.0
+offset_right = 196.0
+offset_bottom = 189.0
+size_flags_horizontal = 3
+script = ExtResource("1_i4ma7")
+
+[node name="LayerEntryContainer" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 theme_override_constants/margin_left = 4
 theme_override_constants/margin_top = 2
 theme_override_constants/margin_right = 4
 theme_override_constants/margin_bottom = 2
-script = ExtResource("1_i4ma7")
 
-[node name="PanelContainer" type="PanelContainer" parent="."]
+[node name="PanelContainer" type="PanelContainer" parent="LayerEntryContainer"]
 layout_mode = 2
 
-[node name="MarginContainer" type="MarginContainer" parent="PanelContainer"]
+[node name="MarginContainer" type="MarginContainer" parent="LayerEntryContainer/PanelContainer"]
 auto_translate_mode = 1
 layout_mode = 2
 theme_override_constants/margin_left = 2
@@ -22,10 +45,10 @@ theme_override_constants/margin_top = 2
 theme_override_constants/margin_right = 2
 theme_override_constants/margin_bottom = 2
 
-[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer/MarginContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="LayerEntryContainer/PanelContainer/MarginContainer"]
 layout_mode = 2
 
-[node name="NameTexture" type="MarginContainer" parent="PanelContainer/MarginContainer/VBoxContainer"]
+[node name="LayerControls" type="MarginContainer" parent="LayerEntryContainer/PanelContainer/MarginContainer/VBoxContainer"]
 auto_translate_mode = 1
 layout_mode = 2
 theme_override_constants/margin_left = 10
@@ -33,18 +56,71 @@ theme_override_constants/margin_top = 2
 theme_override_constants/margin_right = 2
 theme_override_constants/margin_bottom = 2
 
-[node name="HBoxContainer" type="HBoxContainer" parent="PanelContainer/MarginContainer/VBoxContainer/NameTexture"]
+[node name="HBoxContainer" type="HBoxContainer" parent="LayerEntryContainer/PanelContainer/MarginContainer/VBoxContainer/LayerControls"]
 auto_translate_mode = 1
 layout_mode = 2
 theme_override_constants/separation = 10
 
-[node name="SettingLabel" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer/NameTexture/HBoxContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="LayerEntryContainer/PanelContainer/MarginContainer/VBoxContainer/LayerControls/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="ArrangeBottomButton" type="Button" parent="LayerEntryContainer/PanelContainer/MarginContainer/VBoxContainer/LayerControls/HBoxContainer/HBoxContainer"]
+unique_name_in_owner = true
+visible = false
+custom_minimum_size = Vector2(31, 0)
+layout_mode = 2
+theme_override_fonts/font = SubResource("FontVariation_7kh3k")
+text = "⤓"
+
+[node name="ArrangeDownButton" type="Button" parent="LayerEntryContainer/PanelContainer/MarginContainer/VBoxContainer/LayerControls/HBoxContainer/HBoxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(31, 0)
+layout_mode = 2
+theme_override_fonts/font = SubResource("FontVariation_7kh3k")
+text = "↓"
+
+[node name="ArrangeUpButton" type="Button" parent="LayerEntryContainer/PanelContainer/MarginContainer/VBoxContainer/LayerControls/HBoxContainer/HBoxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(31, 0)
+layout_mode = 2
+theme_override_fonts/font = SubResource("FontVariation_7kh3k")
+text = "↑"
+
+[node name="ArrangeTopButton" type="Button" parent="LayerEntryContainer/PanelContainer/MarginContainer/VBoxContainer/LayerControls/HBoxContainer/HBoxContainer"]
+unique_name_in_owner = true
+visible = false
+custom_minimum_size = Vector2(31, 0)
+layout_mode = 2
+theme_override_fonts/font = SubResource("FontVariation_7kh3k")
+text = "⤒"
+
+[node name="LayerIndexLabel" type="Label" parent="LayerEntryContainer/PanelContainer/MarginContainer/VBoxContainer/LayerControls/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "#0"
+label_settings = SubResource("LabelSettings_2gk0c")
+
+[node name="NameTexture" type="MarginContainer" parent="LayerEntryContainer/PanelContainer/MarginContainer/VBoxContainer"]
+auto_translate_mode = 1
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 2
+theme_override_constants/margin_right = 2
+theme_override_constants/margin_bottom = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="LayerEntryContainer/PanelContainer/MarginContainer/VBoxContainer/NameTexture"]
+auto_translate_mode = 1
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="SettingLabel" type="Label" parent="LayerEntryContainer/PanelContainer/MarginContainer/VBoxContainer/NameTexture/HBoxContainer"]
 auto_translate_mode = 1
 layout_mode = 2
 size_flags_horizontal = 3
 text = "Name"
 
-[node name="NameValue" type="Button" parent="PanelContainer/MarginContainer/VBoxContainer/NameTexture/HBoxContainer"]
+[node name="NameValue" type="Button" parent="LayerEntryContainer/PanelContainer/MarginContainer/VBoxContainer/NameTexture/HBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
@@ -53,7 +129,7 @@ text_overrun_behavior = 3
 icon_alignment = 2
 expand_icon = true
 
-[node name="InFrontBool" type="MarginContainer" parent="PanelContainer/MarginContainer/VBoxContainer"]
+[node name="InFrontBool" type="MarginContainer" parent="LayerEntryContainer/PanelContainer/MarginContainer/VBoxContainer"]
 auto_translate_mode = 1
 layout_mode = 2
 theme_override_constants/margin_left = 10
@@ -61,23 +137,23 @@ theme_override_constants/margin_top = 2
 theme_override_constants/margin_right = 2
 theme_override_constants/margin_bottom = 2
 
-[node name="HBoxContainer" type="HBoxContainer" parent="PanelContainer/MarginContainer/VBoxContainer/InFrontBool"]
+[node name="HBoxContainer" type="HBoxContainer" parent="LayerEntryContainer/PanelContainer/MarginContainer/VBoxContainer/InFrontBool"]
 auto_translate_mode = 1
 layout_mode = 2
 theme_override_constants/separation = 10
 
-[node name="SettingLabel" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer/InFrontBool/HBoxContainer"]
+[node name="SettingLabel" type="Label" parent="LayerEntryContainer/PanelContainer/MarginContainer/VBoxContainer/InFrontBool/HBoxContainer"]
 auto_translate_mode = 1
 layout_mode = 2
 size_flags_horizontal = 3
 text = "In Front"
 
-[node name="InFrontValue" type="CheckButton" parent="PanelContainer/MarginContainer/VBoxContainer/InFrontBool/HBoxContainer"]
+[node name="InFrontValue" type="CheckButton" parent="LayerEntryContainer/PanelContainer/MarginContainer/VBoxContainer/InFrontBool/HBoxContainer"]
 unique_name_in_owner = true
 auto_translate_mode = 1
 layout_mode = 2
 
-[node name="OpacityFloat" type="MarginContainer" parent="PanelContainer/MarginContainer/VBoxContainer"]
+[node name="OpacityFloat" type="MarginContainer" parent="LayerEntryContainer/PanelContainer/MarginContainer/VBoxContainer"]
 auto_translate_mode = 1
 layout_mode = 2
 theme_override_constants/margin_left = 10
@@ -85,18 +161,18 @@ theme_override_constants/margin_top = 2
 theme_override_constants/margin_right = 2
 theme_override_constants/margin_bottom = 2
 
-[node name="HBoxContainer" type="HBoxContainer" parent="PanelContainer/MarginContainer/VBoxContainer/OpacityFloat"]
+[node name="HBoxContainer" type="HBoxContainer" parent="LayerEntryContainer/PanelContainer/MarginContainer/VBoxContainer/OpacityFloat"]
 auto_translate_mode = 1
 layout_mode = 2
 theme_override_constants/separation = 10
 
-[node name="SettingLabel" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer/OpacityFloat/HBoxContainer"]
+[node name="SettingLabel" type="Label" parent="LayerEntryContainer/PanelContainer/MarginContainer/VBoxContainer/OpacityFloat/HBoxContainer"]
 auto_translate_mode = 1
 layout_mode = 2
 size_flags_horizontal = 3
 text = "Opacity"
 
-[node name="OpacityValue" type="SpinBox" parent="PanelContainer/MarginContainer/VBoxContainer/OpacityFloat/HBoxContainer"]
+[node name="OpacityValue" type="SpinBox" parent="LayerEntryContainer/PanelContainer/MarginContainer/VBoxContainer/OpacityFloat/HBoxContainer"]
 unique_name_in_owner = true
 auto_translate_mode = 1
 layout_mode = 2
@@ -106,7 +182,7 @@ allow_lesser = true
 alignment = 2
 custom_arrow_step = 0.01
 
-[node name="FogTintFloat" type="MarginContainer" parent="PanelContainer/MarginContainer/VBoxContainer"]
+[node name="FogTintFloat" type="MarginContainer" parent="LayerEntryContainer/PanelContainer/MarginContainer/VBoxContainer"]
 auto_translate_mode = 1
 layout_mode = 2
 theme_override_constants/margin_left = 10
@@ -114,18 +190,18 @@ theme_override_constants/margin_top = 2
 theme_override_constants/margin_right = 2
 theme_override_constants/margin_bottom = 2
 
-[node name="HBoxContainer" type="HBoxContainer" parent="PanelContainer/MarginContainer/VBoxContainer/FogTintFloat"]
+[node name="HBoxContainer" type="HBoxContainer" parent="LayerEntryContainer/PanelContainer/MarginContainer/VBoxContainer/FogTintFloat"]
 auto_translate_mode = 1
 layout_mode = 2
 theme_override_constants/separation = 10
 
-[node name="SettingLabel" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer/FogTintFloat/HBoxContainer"]
+[node name="SettingLabel" type="Label" parent="LayerEntryContainer/PanelContainer/MarginContainer/VBoxContainer/FogTintFloat/HBoxContainer"]
 auto_translate_mode = 1
 layout_mode = 2
 size_flags_horizontal = 3
 text = "Fog Tint"
 
-[node name="FogTintValue" type="SpinBox" parent="PanelContainer/MarginContainer/VBoxContainer/FogTintFloat/HBoxContainer"]
+[node name="FogTintValue" type="SpinBox" parent="LayerEntryContainer/PanelContainer/MarginContainer/VBoxContainer/FogTintFloat/HBoxContainer"]
 unique_name_in_owner = true
 auto_translate_mode = 1
 layout_mode = 2
@@ -135,7 +211,11 @@ allow_lesser = true
 alignment = 2
 custom_arrow_step = 0.01
 
-[connection signal="pressed" from="PanelContainer/MarginContainer/VBoxContainer/NameTexture/HBoxContainer/NameValue" to="." method="_on_name_texture_pressed"]
-[connection signal="toggled" from="PanelContainer/MarginContainer/VBoxContainer/InFrontBool/HBoxContainer/InFrontValue" to="." method="_on_in_front_value_changed"]
-[connection signal="value_changed" from="PanelContainer/MarginContainer/VBoxContainer/OpacityFloat/HBoxContainer/OpacityValue" to="." method="_on_opacity_value_changed"]
-[connection signal="value_changed" from="PanelContainer/MarginContainer/VBoxContainer/FogTintFloat/HBoxContainer/FogTintValue" to="." method="_on_fog_tint_value_changed"]
+[connection signal="pressed" from="LayerEntryContainer/PanelContainer/MarginContainer/VBoxContainer/LayerControls/HBoxContainer/HBoxContainer/ArrangeBottomButton" to="." method="_on_arrange_bottom_button_pressed"]
+[connection signal="pressed" from="LayerEntryContainer/PanelContainer/MarginContainer/VBoxContainer/LayerControls/HBoxContainer/HBoxContainer/ArrangeDownButton" to="." method="_on_arrange_down_button_pressed"]
+[connection signal="pressed" from="LayerEntryContainer/PanelContainer/MarginContainer/VBoxContainer/LayerControls/HBoxContainer/HBoxContainer/ArrangeUpButton" to="." method="_on_arrange_up_button_pressed"]
+[connection signal="pressed" from="LayerEntryContainer/PanelContainer/MarginContainer/VBoxContainer/LayerControls/HBoxContainer/HBoxContainer/ArrangeTopButton" to="." method="_on_arrange_top_button_pressed"]
+[connection signal="pressed" from="LayerEntryContainer/PanelContainer/MarginContainer/VBoxContainer/NameTexture/HBoxContainer/NameValue" to="." method="_on_name_texture_pressed"]
+[connection signal="toggled" from="LayerEntryContainer/PanelContainer/MarginContainer/VBoxContainer/InFrontBool/HBoxContainer/InFrontValue" to="." method="_on_in_front_value_changed"]
+[connection signal="value_changed" from="LayerEntryContainer/PanelContainer/MarginContainer/VBoxContainer/OpacityFloat/HBoxContainer/OpacityValue" to="." method="_on_opacity_value_changed"]
+[connection signal="value_changed" from="LayerEntryContainer/PanelContainer/MarginContainer/VBoxContainer/FogTintFloat/HBoxContainer/FogTintValue" to="." method="_on_fog_tint_value_changed"]

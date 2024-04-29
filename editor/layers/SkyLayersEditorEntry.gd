@@ -1,6 +1,6 @@
-extends MarginContainer
+extends Control
 
-var TEX_SELECT = preload("res://editor/settings/TextureSelect.tscn")
+const TEX_SELECT = preload("res://editor/settings/TextureSelect.tscn")
 
 var layer_index: int
 var layer: FezSkyLayer:
@@ -9,15 +9,25 @@ var layer: FezSkyLayer:
 
 func _ready() -> void:
 	update_all_setting_values()
+	custom_minimum_size = $LayerEntryContainer.size
+	if layer_index == FezSky.layers.size() - 1:
+		
+		pass
 
 func update_all_setting_values():
 	var texname = layer.name
-	%NameValue.text = texname
-	%NameValue.icon = FezSky.get_texture(texname)
-	%InFrontValue.button_pressed = layer.in_front
-	%OpacityValue.value = layer.opacity
-	%FogTintValue.value = layer.fog_tint
+	%LayerIndexLabel.text = "#" + str(layer_index)
+	update_layer_texture_button()
+	update_in_front_no_signal()
+	update_opacity_no_signal()
+	update_fogtint_no_signal()
 
+func _unhandled_input(event: InputEvent) -> void:
+	var snapping = Input.is_action_pressed("snap_modifier")
+	%ArrangeBottomButton.visible = snapping
+	%ArrangeDownButton.visible = not snapping
+	%ArrangeUpButton.visible = not snapping
+	%ArrangeTopButton.visible = snapping
 
 func _on_name_texture_pressed() -> void:
 	var selector = TEX_SELECT.instantiate()
@@ -48,3 +58,31 @@ func _on_fog_tint_value_changed(value: float) -> void:
 
 func update_fogtint_no_signal():
 	%FogTintValue.set_value_no_signal(layer.fog_tint)
+
+static func rearrange_layer(index: int, newpos: int):
+	var layer_to_move = FezSky.layers[index]
+	FezSky.layers.remove_at(index)
+	FezSky.layers.insert(newpos, layer_to_move)
+	FezSky.layers_changed.emit()
+	FezSky.sky_changed.emit()
+
+func _on_arrange_down_button_pressed() -> void:
+	EditorState.alter_with_methods("Move Layer %s Down" % layer_index, rearrange_layer.bind(layer_index, layer_index - 1), rearrange_layer.bind(layer_index - 1, layer_index))
+	pass # Replace with function body.
+
+
+func _on_arrange_up_button_pressed() -> void:
+	EditorState.alter_with_methods("Move Layer %s Up" % layer_index, rearrange_layer.bind(layer_index, layer_index + 1), rearrange_layer.bind(layer_index + 1, layer_index))
+	pass # Replace with function body.
+
+
+func _on_arrange_bottom_button_pressed() -> void:
+	var deltapos = clampi(layer_index - FezSky.layers.size(), 0, FezSky.layers.size())
+	EditorState.alter_with_methods("Move Layer %s To Bottom" % layer_index, rearrange_layer.bind(layer_index, deltapos), rearrange_layer.bind(deltapos, layer_index))
+	pass # Replace with function body.
+
+
+func _on_arrange_top_button_pressed() -> void:
+	var deltapos = clampi(layer_index + FezSky.layers.size(), 0, FezSky.layers.size())
+	EditorState.alter_with_methods("Move Layer %s To Top" % layer_index, rearrange_layer.bind(layer_index, deltapos), rearrange_layer.bind(deltapos, layer_index))
+	pass # Replace with function body.
