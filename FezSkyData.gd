@@ -4,9 +4,11 @@ class_name FezSkyData
 ##
 
 const MISSING_TEXTURE = preload("res://missing_texture.svg")
+const DEFAULTSKYBG = preload("res://simpleskybg.tres")
 
 signal new_sky_loaded
 signal sky_changed
+signal clouds_changed
 
 var sky_loaded: bool = false
 
@@ -91,10 +93,10 @@ func get_timed_color(time: float, color_arr: Array[Color]) -> Color:
 	return the_color
 
 func new_sky() -> void:
-	_textures = {}
+	_textures = {"skyback": DEFAULTSKYBG}
 	layers = []
 	clouds = []
-	background = ""
+	background = "skyback"
 	wind_speed = 1.0
 	density = 1.0
 	fog_density = 0.02

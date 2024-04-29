@@ -1,44 +1,9 @@
-[gd_scene load_steps=8 format=3 uid="uid://blxfovnib25m5"]
+[gd_scene load_steps=3 format=3 uid="uid://blxfovnib25m5"]
 
 [ext_resource type="Script" path="res://TextureExplorer.gd" id="1_jccit"]
 
 [sub_resource type="FontVariation" id="FontVariation_q6vx7"]
 variation_embolden = 1.0
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ymwrw"]
-bg_color = Color(0.537255, 0.0313726, 0, 0.501961)
-corner_radius_top_left = 4
-corner_radius_top_right = 4
-corner_radius_bottom_right = 4
-corner_radius_bottom_left = 4
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_82wov"]
-bg_color = Color(0.536458, 0.0319759, 0, 1)
-corner_radius_top_left = 4
-corner_radius_top_right = 4
-corner_radius_bottom_right = 4
-corner_radius_bottom_left = 4
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ty1aq"]
-bg_color = Color(0.833333, 0.0496713, 0, 1)
-corner_radius_top_left = 4
-corner_radius_top_right = 4
-corner_radius_bottom_right = 4
-corner_radius_bottom_left = 4
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_koime"]
-bg_color = Color(0.536458, 0.0319759, 0, 1)
-corner_radius_top_left = 4
-corner_radius_top_right = 4
-corner_radius_bottom_right = 4
-corner_radius_bottom_left = 4
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_p1s56"]
-bg_color = Color(0.713542, 0.0425311, 0, 1)
-corner_radius_top_left = 4
-corner_radius_top_right = 4
-corner_radius_bottom_right = 4
-corner_radius_bottom_left = 4
 
 [node name="TextureExplorer" type="VBoxContainer"]
 anchors_preset = 15
@@ -62,13 +27,9 @@ auto_translate_mode = 1
 custom_minimum_size = Vector2(31, 31)
 layout_mode = 2
 focus_mode = 0
+theme_type_variation = &"RedButton"
 theme_override_fonts/font = SubResource("FontVariation_q6vx7")
 theme_override_font_sizes/font_size = 16
-theme_override_styles/disabled = SubResource("StyleBoxFlat_ymwrw")
-theme_override_styles/hover_pressed = SubResource("StyleBoxFlat_82wov")
-theme_override_styles/hover = SubResource("StyleBoxFlat_ty1aq")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_koime")
-theme_override_styles/normal = SubResource("StyleBoxFlat_p1s56")
 disabled = true
 text = "⨉"
 

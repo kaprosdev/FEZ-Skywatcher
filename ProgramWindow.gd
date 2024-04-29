@@ -17,7 +17,8 @@ enum FILE_MENU {
 	OPEN,
 	SAVE,
 	SAVE_AS,
-	QUIT
+	QUIT,
+	RELOAD
 }
 
 func _stub():
@@ -35,13 +36,15 @@ func save_sky(no_prompt: bool = false) -> void:
 func _on_file_id_pressed(id: int) -> void:
 	match (id as FILE_MENU):
 		FILE_MENU.NEW:
-			_stub()
+			FezSky.new_sky()
 		FILE_MENU.OPEN:
 			open_sky()
 		FILE_MENU.SAVE:
 			save_sky(true)
 		FILE_MENU.SAVE_AS:
 			save_sky(false)
+		FILE_MENU.RELOAD:
+			EditorState.load_sky(EditorState.loaded_sky_path)
 		
 	pass
 

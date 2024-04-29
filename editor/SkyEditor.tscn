@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://v8kykgvjf7a7"]
+[gd_scene load_steps=12 format=3 uid="uid://v8kykgvjf7a7"]
 
 [ext_resource type="Script" path="res://editor/SkyEditor.gd" id="1_er30l"]
 [ext_resource type="PackedScene" uid="uid://dq5pqe2t36jib" path="res://editor/sky_preview/SkyPreview.tscn" id="1_jh2pw"]
@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://dhi8xqc5pu4uj" path="res://editor/settings/SkyEditorBoolSetting.tscn" id="3_p0act"]
 [ext_resource type="PackedScene" uid="uid://pjsk5llxms0j" path="res://editor/settings/SkyEditorFloatSetting.tscn" id="3_s05pv"]
 [ext_resource type="PackedScene" uid="uid://ctflfj6mconmy" path="res://editor/layers/SkyLayersEditor.tscn" id="4_18wve"]
+[ext_resource type="PackedScene" uid="uid://dplsmk0ivk1ed" path="res://editor/layers/SkyCloudsList.tscn" id="7_k7fug"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_k33ic"]
 bg_color = Color(0, 0, 0, 0.501961)
@@ -252,6 +253,10 @@ layout_mode = 2
 setting_name = "layer_base_x_offset"
 
 [node name="Layers" parent="SettingsContainer/TabContainer" instance=ExtResource("4_18wve")]
+visible = false
+layout_mode = 2
+
+[node name="Clouds" parent="SettingsContainer/TabContainer" instance=ExtResource("7_k7fug")]
 visible = false
 layout_mode = 2
 

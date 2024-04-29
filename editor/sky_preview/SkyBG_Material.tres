@@ -1,20 +1,10 @@
-[gd_resource type="ShaderMaterial" load_steps=4 format=3 uid="uid://cnskfst7nv7yw"]
+[gd_resource type="ShaderMaterial" load_steps=3 format=3 uid="uid://cnskfst7nv7yw"]
 
 [ext_resource type="Shader" uid="uid://r2o87octshbi" path="res://editor/sky_preview/SkyBG_Shader.tres" id="1_63ogx"]
-
-[sub_resource type="Gradient" id="Gradient_utb4k"]
-interpolation_mode = 1
-offsets = PackedFloat32Array(0, 0.2, 0.3, 0.7, 0.8)
-colors = PackedColorArray(0.0906807, 0.0245119, 0.380208, 1, 0.472851, 0.66811, 1, 1, 0, 0.878431, 1, 1, 0.47451, 0.666667, 1, 1, 0.0901961, 0.0235294, 0.380392, 1)
-metadata/_snap_enabled = true
-
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_0wdwc"]
-gradient = SubResource("Gradient_utb4k")
-width = 10
-height = 5
+[ext_resource type="Texture2D" uid="uid://dypcg3dx18k5u" path="res://simpleskybg.tres" id="2_lkpoe"]
 
 [resource]
 render_priority = -25
 shader = ExtResource("1_63ogx")
 shader_parameter/time_of_day = 1.5
-shader_parameter/sky_texture = SubResource("GradientTexture2D_0wdwc")
+shader_parameter/sky_texture = ExtResource("2_lkpoe")
