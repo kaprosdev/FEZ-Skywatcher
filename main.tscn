@@ -1,9 +1,10 @@
-[gd_scene load_steps=6 format=3 uid="uid://bnwapgffcuwr4"]
+[gd_scene load_steps=7 format=3 uid="uid://bnwapgffcuwr4"]
 
 [ext_resource type="Script" path="res://ProgramWindow.gd" id="1_mow1k"]
 [ext_resource type="PackedScene" uid="uid://v8kykgvjf7a7" path="res://editor/SkyEditor.tscn" id="2_8seox"]
 [ext_resource type="Script" path="res://EditMenu.gd" id="2_xfpvp"]
 [ext_resource type="PackedScene" uid="uid://blxfovnib25m5" path="res://TextureExplorer.tscn" id="3_55h2w"]
+[ext_resource type="Script" path="res://UnsavedFileConfirmation.gd" id="5_vv4n6"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_exrvo"]
 bg_color = Color(0.156863, 0.156863, 0.156863, 0.501961)
@@ -50,7 +51,8 @@ theme_override_styles/panel = SubResource("StyleBoxFlat_exrvo")
 layout_mode = 2
 
 [node name="File" type="PopupMenu" parent="VBoxContainer/PanelContainer/MenuBar"]
-size = Vector2i(123, 147)
+unique_name_in_owner = true
+size = Vector2i(186, 178)
 item_count = 8
 item_0/text = "New Sky"
 item_0/id = 1
@@ -58,12 +60,15 @@ item_1/text = "Open Sky..."
 item_1/id = 2
 item_2/text = "Save Sky"
 item_2/id = 3
+item_2/disabled = true
 item_3/text = "Save Sky As..."
 item_3/id = 4
+item_3/disabled = true
 item_4/id = 7
 item_4/separator = true
 item_5/text = "Reload Sky From Disk"
 item_5/id = 6
+item_5/disabled = true
 item_6/id = 100
 item_6/separator = true
 item_7/text = "Quit"
@@ -91,7 +96,25 @@ layout_mode = 2
 visible = false
 layout_mode = 2
 
+[node name="UnsavedFileConfirmation" type="AcceptDialog" parent="."]
+initial_position = 2
+size = Vector2i(289, 100)
+ok_button_text = "Save"
+script = ExtResource("5_vv4n6")
+
+[node name="HelperSaveFileDialog" type="FileDialog" parent="UnsavedFileConfirmation"]
+auto_translate_mode = 1
+initial_position = 2
+size = Vector2i(207, 158)
+ok_button_text = "Save"
+access = 2
+filters = PackedStringArray("*.fezsky.json")
+use_native_dialog = true
+
 [connection signal="file_selected" from="OpenFileDialog" to="." method="_on_open_file_dialog_file_selected"]
 [connection signal="file_selected" from="SaveFileDialog" to="." method="_on_save_file_dialog_file_selected"]
 [connection signal="id_pressed" from="VBoxContainer/PanelContainer/MenuBar/File" to="." method="_on_file_id_pressed"]
 [connection signal="id_pressed" from="VBoxContainer/PanelContainer/MenuBar/Edit" to="VBoxContainer/PanelContainer/MenuBar/Edit" method="_on_id_pressed"]
+[connection signal="confirmed" from="UnsavedFileConfirmation" to="UnsavedFileConfirmation" method="_on_save_button"]
+[connection signal="custom_action" from="UnsavedFileConfirmation" to="UnsavedFileConfirmation" method="_on_other_button"]
+[connection signal="file_selected" from="UnsavedFileConfirmation/HelperSaveFileDialog" to="UnsavedFileConfirmation" method="_on_save_file_dialog_file_selected"]

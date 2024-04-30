@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=3 uid="uid://bte3a6r6kao1i"]
+[gd_scene load_steps=6 format=3 uid="uid://bte3a6r6kao1i"]
 
 [ext_resource type="Script" path="res://editor/layers/SkyLayersEditorEntry.gd" id="1_i4ma7"]
 
@@ -11,6 +11,9 @@ variation_transform = Transform2D(1, 0.15, 0, 1, 0, 0)
 [sub_resource type="LabelSettings" id="LabelSettings_2gk0c"]
 font = SubResource("FontVariation_1s7rp")
 font_color = Color(0.630208, 0.630208, 0.630208, 1)
+
+[sub_resource type="FontVariation" id="FontVariation_8qv8m"]
+variation_embolden = 1.0
 
 [node name="LayerEntry" type="Control"]
 layout_mode = 3
@@ -101,6 +104,17 @@ layout_mode = 2
 text = "#0"
 label_settings = SubResource("LabelSettings_2gk0c")
 
+[node name="DeleteLayerButton" type="Button" parent="LayerEntryContainer/PanelContainer/MarginContainer/VBoxContainer/LayerControls/HBoxContainer"]
+unique_name_in_owner = true
+auto_translate_mode = 1
+custom_minimum_size = Vector2(25, 25)
+layout_mode = 2
+size_flags_vertical = 4
+theme_type_variation = &"RedButton"
+theme_override_fonts/font = SubResource("FontVariation_8qv8m")
+theme_override_font_sizes/font_size = 16
+text = " ⨉ "
+
 [node name="NameTexture" type="MarginContainer" parent="LayerEntryContainer/PanelContainer/MarginContainer/VBoxContainer"]
 auto_translate_mode = 1
 layout_mode = 2
@@ -176,6 +190,7 @@ text = "Opacity"
 unique_name_in_owner = true
 auto_translate_mode = 1
 layout_mode = 2
+max_value = 1.0
 step = 0.001
 allow_greater = true
 allow_lesser = true
@@ -215,6 +230,7 @@ custom_arrow_step = 0.01
 [connection signal="pressed" from="LayerEntryContainer/PanelContainer/MarginContainer/VBoxContainer/LayerControls/HBoxContainer/HBoxContainer/ArrangeDownButton" to="." method="_on_arrange_down_button_pressed"]
 [connection signal="pressed" from="LayerEntryContainer/PanelContainer/MarginContainer/VBoxContainer/LayerControls/HBoxContainer/HBoxContainer/ArrangeUpButton" to="." method="_on_arrange_up_button_pressed"]
 [connection signal="pressed" from="LayerEntryContainer/PanelContainer/MarginContainer/VBoxContainer/LayerControls/HBoxContainer/HBoxContainer/ArrangeTopButton" to="." method="_on_arrange_top_button_pressed"]
+[connection signal="pressed" from="LayerEntryContainer/PanelContainer/MarginContainer/VBoxContainer/LayerControls/HBoxContainer/DeleteLayerButton" to="." method="_on_delete_layer_button_pressed"]
 [connection signal="pressed" from="LayerEntryContainer/PanelContainer/MarginContainer/VBoxContainer/NameTexture/HBoxContainer/NameValue" to="." method="_on_name_texture_pressed"]
 [connection signal="toggled" from="LayerEntryContainer/PanelContainer/MarginContainer/VBoxContainer/InFrontBool/HBoxContainer/InFrontValue" to="." method="_on_in_front_value_changed"]
 [connection signal="value_changed" from="LayerEntryContainer/PanelContainer/MarginContainer/VBoxContainer/OpacityFloat/HBoxContainer/OpacityValue" to="." method="_on_opacity_value_changed"]

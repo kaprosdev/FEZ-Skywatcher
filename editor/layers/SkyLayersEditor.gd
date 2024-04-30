@@ -18,3 +18,17 @@ func _load_layers():
 		%NoLayersEntry.visible = false
 	else:
 		%NoLayersEntry.visible = true
+
+func add_new_layer():
+	FezSky.layers.push_back(FezSkyLayer.new())
+	FezSky.sky_changed.emit()
+	FezSky.layers_changed.emit()
+
+func remove_newest_layer():
+	FezSky.layers.pop_back()
+	FezSky.sky_changed.emit()
+	FezSky.layers_changed.emit()
+
+func _on_add_layer_button_pressed() -> void:
+	EditorState.alter_with_methods("Add New Layer", add_new_layer, remove_newest_layer)
+	

@@ -26,6 +26,22 @@ layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
+[node name="PanelContainer" type="PanelContainer" parent="VBoxContainer"]
+auto_translate_mode = 1
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/PanelContainer"]
+auto_translate_mode = 1
+layout_mode = 2
+alignment = 2
+
+[node name="AddLayerButton" type="Button" parent="VBoxContainer/PanelContainer/HBoxContainer"]
+auto_translate_mode = 1
+layout_mode = 2
+focus_mode = 0
+theme_type_variation = &"GreenButton"
+text = "＋ Add"
+
 [node name="NoLayersEntry" type="MarginContainer" parent="VBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
@@ -58,3 +74,5 @@ unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
+
+[connection signal="pressed" from="VBoxContainer/PanelContainer/HBoxContainer/AddLayerButton" to="." method="_on_add_layer_button_pressed"]

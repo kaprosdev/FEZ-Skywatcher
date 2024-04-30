@@ -15,11 +15,16 @@ var loaded_sky_path = ""
 ## Used to determine whether the current version of the file is modified.
 var saved_version = 0
 
+var saved_up_to_date: bool:
+	get:
+		return unredo.get_version() == saved_version
+
 func _init() -> void:
 	unredo = UndoRedo.new()
 
 func _ready() -> void:
 	unredo.version_changed.connect(_update_window_title)
+	saved_version = unredo.get_version()
 	_update_window_title()
 	pass
 
@@ -27,24 +32,32 @@ func _ready() -> void:
 func _update_window_title() -> void:
 	var window = get_tree().root
 	if FezSky.sky_name != "":
-		window.title = "%s%s - Skywatcher" % [FezSky.sky_name, ("" if unredo.get_version() == saved_version else " *")]
+		window.title = "%s%s - Skywatcher" % [FezSky.sky_name, ("" if saved_up_to_date else " *")]
 	elif FezSky.sky_loaded:
-		window.title = "[unnamed]%s - Skywatcher" % [("" if unredo.get_version() == saved_version else " *")]
+		window.title = "[unnamed]%s - Skywatcher" % [("" if saved_up_to_date else " *")]
 	else:
 		window.title = "[no sky loaded] - Skywatcher"
 
-## Load a sky from disk, resetting the saved status and undo history.
-func load_sky(path):
-	FezSky.load_sky(path)
-	loaded_sky_path = path
+func new_sky():
+	FezSky.new_sky()
 	unredo.clear_history()
 	saved_version = unredo.get_version()
+	_update_window_title()
+
+## Load a sky from disk, resetting the saved status and undo history.
+func load_sky(path):
+	loaded_sky_path = path
+	FezSky.load_sky(path)
+	unredo.clear_history()
+	saved_version = unredo.get_version()
+	_update_window_title()
 
 ## Save a sky to disk, bringing the saved status up to date.
 func save_sky(path):
-	FezSky.save(path)
 	loaded_sky_path = path
+	FezSky.save(path)
 	saved_version = unredo.get_version()
+	_update_window_title()
 	
 ## Alter any property of the sky, adding that modification to the undo/redo list.
 ## Similar syntax to [method alter_object].

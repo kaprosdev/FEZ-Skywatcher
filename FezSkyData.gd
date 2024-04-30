@@ -95,6 +95,8 @@ func get_timed_color(time: float, color_arr: Array[Color]) -> Color:
 
 func new_sky() -> void:
 	_textures = {"skyback": DEFAULTSKYBG}
+	for layer in layers:
+		layer.free()
 	layers = []
 	clouds = []
 	background = "skyback"
@@ -156,6 +158,8 @@ func load_sky(path) -> void:
 		texturedict[texfilename.get_basename().to_lower()] = tex
 	_textures = texturedict
 
+	for layer in layers:
+		layer.free()
 	# Parse sky layers
 	layers = []
 	for layerdata in skydata["Layers"]:
@@ -252,6 +256,8 @@ func save(path: String):
 		DirAccess.make_dir_recursive_absolute(textures_folder_path)
 	for texname in _textures.keys():
 		_textures[texname].get_image().save_png(textures_folder_path + "/" + texname.to_lower() + ".png")
+		
+	FezSky.new_sky_loaded.emit()
 	return
 
 func init_cloud_colors():

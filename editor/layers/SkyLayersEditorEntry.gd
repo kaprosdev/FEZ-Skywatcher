@@ -86,3 +86,17 @@ func _on_arrange_top_button_pressed() -> void:
 	var deltapos = clampi(layer_index + FezSky.layers.size(), 0, FezSky.layers.size())
 	EditorState.alter_with_methods("Move Layer %s To Top" % layer_index, rearrange_layer.bind(layer_index, deltapos), rearrange_layer.bind(deltapos, layer_index))
 	pass # Replace with function body.
+
+static func remove_layer(index: int):
+	FezSky.layers.remove_at(index)
+	FezSky.layers_changed.emit()
+	FezSky.sky_changed.emit()
+
+static func readd_layer(index: int, layer: FezSkyLayer):
+	FezSky.layers.insert(index, layer)
+	FezSky.layers_changed.emit()
+	FezSky.sky_changed.emit()
+
+func _on_delete_layer_button_pressed() -> void:
+	EditorState.alter_with_methods("Delete Layer %s" % layer_index, remove_layer.bind(layer_index), readd_layer.bind(layer_index, layer))
+	pass # Replace with function body.
