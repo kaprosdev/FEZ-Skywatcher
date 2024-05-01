@@ -53,7 +53,7 @@ func save_sky(no_prompt: bool = false) -> void:
 func _on_file_id_pressed(id: int) -> void:
 	match (id as FILE_MENU):
 		FILE_MENU.NEW:
-			$UnsavedFileConfirmation.popup_if_necessary(func(): EditorState.new_sky())
+			$UnsavedFileConfirmation.popup_if_necessary(func(): %NameChangeDialog.setup_and_open(true))
 		FILE_MENU.OPEN:
 			$UnsavedFileConfirmation.popup_if_necessary(func(): open_sky())
 		FILE_MENU.SAVE:
@@ -62,6 +62,8 @@ func _on_file_id_pressed(id: int) -> void:
 			save_sky(false)
 		FILE_MENU.RELOAD:
 			$UnsavedFileConfirmation.popup_if_necessary(func(): EditorState.load_sky(EditorState.loaded_sky_path))
+		FILE_MENU.QUIT:
+			notify_thread_safe(NOTIFICATION_WM_CLOSE_REQUEST)
 
 func _on_open_file_dialog_file_selected(path: String) -> void:
 	$SaveFileDialog.current_dir = $OpenFileDialog.current_dir

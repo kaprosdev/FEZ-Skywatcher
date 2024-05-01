@@ -3,11 +3,13 @@ extends PopupMenu
 enum EDIT_MENU {
 	NOTHING = 0,
 	UNDO,
-	REDO
+	REDO,
+	CHANGE_NAME
 }
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	FezSky.new_sky_loaded.connect(enable_change_name)
 	EditorState.unredo.version_changed.connect(_update_undo_redo)
 	var undo_shortcut = Shortcut.new()
 	undo_shortcut.events = InputMap.action_get_events("edit-undo")
@@ -34,9 +36,14 @@ func _update_undo_redo() -> void:
 		redo_text += EditorState.unredo.get_action_name(EditorState.unredo.get_current_action() + 1) + " "
 	set_item_text(get_item_index(EDIT_MENU.REDO), redo_text)
 
+func enable_change_name():
+	set_item_disabled(get_item_index(EDIT_MENU.CHANGE_NAME), false)
+
 func _on_id_pressed(id: int) -> void:
 	match id:
 		EDIT_MENU.UNDO:
 			EditorState.unredo.undo()
 		EDIT_MENU.REDO:
 			EditorState.unredo.redo()
+		EDIT_MENU.CHANGE_NAME:
+			%NameChangeDialog.setup_and_open()

@@ -1,7 +1,8 @@
-[gd_scene load_steps=7 format=3 uid="uid://bnwapgffcuwr4"]
+[gd_scene load_steps=8 format=3 uid="uid://bnwapgffcuwr4"]
 
 [ext_resource type="Script" path="res://ProgramWindow.gd" id="1_mow1k"]
 [ext_resource type="PackedScene" uid="uid://v8kykgvjf7a7" path="res://editor/SkyEditor.tscn" id="2_8seox"]
+[ext_resource type="PackedScene" uid="uid://drpgwk70dlpo1" path="res://NameChangeDialog.tscn" id="2_s1iih"]
 [ext_resource type="Script" path="res://EditMenu.gd" id="2_xfpvp"]
 [ext_resource type="PackedScene" uid="uid://blxfovnib25m5" path="res://TextureExplorer.tscn" id="3_55h2w"]
 [ext_resource type="Script" path="res://UnsavedFileConfirmation.gd" id="5_vv4n6"]
@@ -17,6 +18,10 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_mow1k")
+
+[node name="NameChangeDialog" parent="." instance=ExtResource("2_s1iih")]
+unique_name_in_owner = true
+visible = false
 
 [node name="OpenFileDialog" type="FileDialog" parent="."]
 title = "Open a File"
@@ -64,7 +69,7 @@ item_2/disabled = true
 item_3/text = "Save Sky As..."
 item_3/id = 4
 item_3/disabled = true
-item_4/id = 7
+item_4/id = 999
 item_4/separator = true
 item_5/text = "Reload Sky From Disk"
 item_5/id = 6
@@ -75,13 +80,18 @@ item_7/text = "Quit"
 item_7/id = 5
 
 [node name="Edit" type="PopupMenu" parent="VBoxContainer/PanelContainer/MenuBar"]
-item_count = 2
+item_count = 4
 item_0/text = "Undo"
 item_0/id = 1
 item_0/disabled = true
 item_1/text = "Redo"
 item_1/id = 2
 item_1/disabled = true
+item_2/id = 999
+item_2/separator = true
+item_3/text = "Change Sky Name..."
+item_3/id = 3
+item_3/disabled = true
 script = ExtResource("2_xfpvp")
 
 [node name="TabContainer" type="TabContainer" parent="VBoxContainer"]

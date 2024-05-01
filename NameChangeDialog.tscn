@@ -1,0 +1,84 @@
+[gd_scene load_steps=2 format=3 uid="uid://drpgwk70dlpo1"]
+
+[ext_resource type="Script" path="res://NameChangeDialog.gd" id="1_7ecou"]
+
+[node name="NameChangeDialog" type="Window"]
+initial_position = 1
+size = Vector2i(390, 280)
+wrap_controls = true
+transient = true
+exclusive = true
+unresizable = true
+popup_window = true
+script = ExtResource("1_7ecou")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 20
+
+[node name="DialogContents" type="CenterContainer" parent="MarginContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="MarginContainer/DialogContents"]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/DialogContents/VBoxContainer2"]
+layout_mode = 2
+alignment = 1
+
+[node name="Label" type="Label" parent="MarginContainer/DialogContents/VBoxContainer2/VBoxContainer"]
+layout_mode = 2
+text = "Enter the new sky name:"
+horizontal_alignment = 1
+
+[node name="NameEdit" type="LineEdit" parent="MarginContainer/DialogContents/VBoxContainer2/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="Spacer" type="Control" parent="MarginContainer/DialogContents/VBoxContainer2"]
+custom_minimum_size = Vector2(0, 10)
+layout_mode = 2
+
+[node name="ChangeWarningLabel" type="RichTextLabel" parent="MarginContainer/DialogContents/VBoxContainer2"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(350, 0)
+layout_mode = 2
+bbcode_enabled = true
+text = "[color=red]This will also change the name of the sky's textures folder!
+If the sky was previously saved, the old textures folder will not be renamed or deleted.[/color]"
+fit_content = true
+scroll_active = false
+shortcut_keys_enabled = false
+
+[node name="Spacer2" type="Control" parent="MarginContainer/DialogContents/VBoxContainer2"]
+auto_translate_mode = 1
+custom_minimum_size = Vector2(0, 10)
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/DialogContents/VBoxContainer2"]
+layout_mode = 2
+alignment = 1
+
+[node name="OKButton" type="Button" parent="MarginContainer/DialogContents/VBoxContainer2/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "OK"
+
+[node name="CancelButton" type="Button" parent="MarginContainer/DialogContents/VBoxContainer2/HBoxContainer"]
+unique_name_in_owner = true
+auto_translate_mode = 1
+layout_mode = 2
+text = "Cancel"
+
+[connection signal="close_requested" from="." to="." method="_on_cancel_button_pressed"]
+[connection signal="text_changed" from="MarginContainer/DialogContents/VBoxContainer2/VBoxContainer/NameEdit" to="." method="_on_name_edit_text_changed"]
+[connection signal="pressed" from="MarginContainer/DialogContents/VBoxContainer2/HBoxContainer/OKButton" to="." method="_on_ok_button_pressed"]
+[connection signal="pressed" from="MarginContainer/DialogContents/VBoxContainer2/HBoxContainer/CancelButton" to="." method="_on_cancel_button_pressed"]
