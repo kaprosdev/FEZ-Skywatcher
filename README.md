@@ -4,7 +4,7 @@ Tool to display and edit `.fezsky.json` files for the game FEZ.
 
 ![skywatcher_preview](https://github.com/kaprosdev/FEZ-Skywatcher/assets/7116426/4efbddd8-bc75-4202-9c4e-eafff5a19385)
 
-My goal for this is to roughly document how skies are put together in the game, eventually integrating these tools into some larger "Swiss Army Knife" application for FEZ modding.  
+My goal for this is to roughly document how skies are put together in the game, eventually integrating these tools into some other larger FEZ modding tool (whatever makes sense, considering a standalone sky editor is a little over-the-top).  
 Until then, this works pretty well standalone for editing FEZ skies - much better than reopening the game after every change.
 
 ## Features
